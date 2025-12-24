@@ -3,231 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Precificação Pro</title>
+    <title>PrecificApp Estratégico</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0b1120; --card: #1e293b; --orange: #ff6600;
+            --bg: #121214; --card: #1c1c1e; --orange: #ff6600;
             --white: #ffffff; --green: #22c55e; --red: #ef4444;
-            --blue: #3b82f6; --gray: #334155; --input-bg: #0f172a;
+            --blue: #3b82f6; --gray: #3d3d3d; --input-bg: #252529;
         }
 
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; }
-
-        /* HEADER & ACTIONS */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .brand h1 { margin: 0; font-size: 1.8rem; }
-        .brand p { margin: 5px 0 0; color: #94a3b8; font-size: 0.9rem; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 20px; font-size: 14px; }
+        .container { max-width: 1050px; margin: 0 auto; }
         
-        .actions { display: flex; gap: 10px; align-items: center; }
-        .btn { padding: 10px 18px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
-        .btn-primary { background: var(--blue); color: white; }
-        .btn-secondary { background: var(--gray); color: white; }
-        .btn-danger { background: rgba(239, 68, 68, 0.2); color: var(--red); border: 1px solid var(--red); }
-        .btn:hover { opacity: 0.8; transform: translateY(-1px); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; }
+        h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 20px; }
 
-        /* LISTA DE PRODUTOS (ACCORDION) */
-        .product-list { display: flex; flex-direction: column; gap: 15px; }
-        .product-item { background: var(--card); border-radius: 12px; border: 1px solid var(--gray); overflow: hidden; }
-        
-        .product-header { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
-        .product-header:hover { background: rgba(255,255,255,0.03); }
-        .product-title { display: flex; align-items: center; gap: 15px; font-weight: 700; font-size: 1.1rem; }
-        .product-info-short { display: flex; align-items: center; gap: 20px; font-size: 0.9rem; }
-
-        .product-content { padding: 25px; border-top: 1px solid var(--gray); display: none; }
-        .product-content.open { display: block; }
-
-        /* GRID INTERNO */
-        .layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 25px; }
+        .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 
-        .form-card { background: var(--input-bg); padding: 20px; border-radius: 12px; margin-bottom: 15px; }
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        label { display: block; font-size: 0.65rem; color: #94a3b8; margin-bottom: 5px; font-weight: 700; text-transform: uppercase; }
-        input { width: 100%; background: #000; border: 1px solid var(--gray); padding: 10px; border-radius: 6px; color: #fff; outline: none; box-sizing: border-box; }
+        .card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid var(--gray); margin-bottom: 20px; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { display: block; font-size: 0.7rem; color: #aaa; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
+        
+        input { width: 100%; background: #000; border: 1px solid var(--gray); padding: 12px; border-radius: 8px; color: #fff; outline: none; box-sizing: border-box; font-size: 1rem; }
         input:focus { border-color: var(--orange); }
 
-        /* DASHBOARD INTERNO */
-        .res-main { text-align: center; padding: 20px; border: 2px solid var(--orange); border-radius: 15px; margin-bottom: 15px; }
-        .big-val { font-size: 2.5rem; font-weight: 800; margin: 5px 0; }
-        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray); font-size: 0.85rem; }
+        .suggestion-box { background: #252529; border: 1px dashed var(--orange); padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-sug { flex: 1; background: #333; border: 1px solid var(--orange); color: var(--white); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 0.8rem; }
+        .btn-sug:hover { background: var(--orange); color: #000; }
 
-        .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .proj-box { background: #000; padding: 10px; border-radius: 8px; text-align: center; font-size: 0.75rem; border: 1px solid var(--gray); }
+        .result-main { background: #000; border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; }
+        .editable-price-container { background: var(--input-bg); border-radius: 12px; padding: 10px; margin: 15px auto; max-width: 250px; border: 1px solid var(--gray); }
+        .editable-price-container input { background: transparent; border: none; text-align: center; font-size: 2.8rem; font-weight: 800; color: var(--white); padding: 0; margin: 0; width: 100%; }
 
-        .status-pill { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+        .big-price { font-size: 3.5rem; font-weight: 800; margin: 10px 0; letter-spacing: -2px; }
+        .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray); }
+        
+        .comp-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 20px 0; background: #333; }
+        .comp-item { height: 100%; transition: width 0.4s ease; }
+
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 25px; }
+        .proj-card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--gray); text-align: center; }
+        .meta-text { display: block; font-size: 0.7rem; color: #888; margin-top: 8px; font-weight: 600; font-style: normal; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="top-nav">
-        <div class="brand">
-            <h1>Simulador de Precificação</h1>
-            <p>Gerencie, calcule e projete lucros de múltiplos produtos.</p>
+    <div class="header">
+        <h1 style="margin:0; font-size: 1.5rem; color: var(--orange);">PrecificApp <span style="color:white">Consultor</span></h1>
+        <select id="moeda" style="background:#000; color:white; border:1px solid var(--orange); padding:8px; border-radius:8px;" onchange="calcular()">
+            <option value="R$">BRL (R$)</option>
+            <option value="$">USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="£" selected>GBP (£)</option>
+        </select>
+    </div>
+
+    <div class="layout">
+        <div>
+            <div class="card">
+                <h3>1. Custos Fixos & Logística</h3>
+                <div class="input-grid">
+                    <div><label>Custo Produto</label><input type="number" id="custoProd" placeholder="0.00" oninput="calcular()"></div>
+                    <div><label>Frete (Envio)</label><input type="number" id="frete" placeholder="0.00" oninput="calcular()"></div>
+                </div>
+                <div class="input-grid">
+                    <div><label>Importação (%)</label><input type="number" id="impImp" placeholder="0" oninput="calcular()"></div>
+                    <div><label>ICMS / IOF (%)</label><input type="number" id="icms" placeholder="0" oninput="calcular()"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>2. Operação & Marketing</h3>
+                <div class="input-grid">
+                    <div><label>Checkout (%)</label><input type="number" id="taxaCheck" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Gateway (%)</label><input type="number" id="taxaGate" placeholder="0" oninput="calcular()"></div>
+                </div>
+                <div class="input-grid">
+                    <div><label>Imposto Venda (%)</label><input type="number" id="impVenda" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Contingência (%)</label><input type="number" id="contingencia" placeholder="0" oninput="calcular()"></div>
+                </div>
+                <label>Marketing (CPA Ideal %)</label>
+                <input type="number" id="mktPerc" value="25" oninput="calcular()">
+            </div>
+
+            <div class="suggestion-box">
+                <h3>💡 Consultoria de Margem</h3>
+                <div class="btn-group">
+                    <button class="btn-sug" onclick="aplicarSugestao(0.2)">20% Lucro</button>
+                    <button class="btn-sug" onclick="aplicarSugestao(0.3)">30% Lucro</button>
+                    <button class="btn-sug" onclick="aplicarSugestao(0.4)">40% Lucro</button>
+                </div>
+            </div>
         </div>
-        <div class="actions">
-            <button class="btn btn-secondary" onclick="exportarDados()">⬇ Exportar</button>
-            <button class="btn btn-secondary" onclick="document.getElementById('fileIn').click()">⬆ Importar</button>
-            <input type="file" id="fileIn" style="display:none" onchange="importarDados(this)">
-            <select id="globalCurrency" style="background:var(--gray); color:white; border:none; padding:10px; border-radius:8px;" onchange="renderList()">
-                <option value="R$">BRL</option>
-                <option value="$">USD</option>
-                <option value="€">EUR</option>
-                <option value="£" selected>GBP</option>
-            </select>
-            <button class="btn btn-primary" onclick="addProduto()">+ Novo</button>
+
+        <div>
+            <div class="result-main">
+                <label style="color: var(--orange); font-weight: bold;">PREÇO DE VENDA DEFINIDO</label>
+                <div class="editable-price-container">
+                    <input type="number" id="precoVenda" placeholder="0.00" oninput="calcular()">
+                </div>
+                <div id="resLucro" class="big-price">0,00</div>
+                <div id="resMargem" style="font-weight: 700; letter-spacing: 1px; color: var(--green);">Margem Final: 0%</div>
+            </div>
+
+            <div class="card" style="margin-top: 20px; padding: 15px;">
+                <h3>Análise de Viabilidade</h3>
+                <div class="detail-item"><span>Markup Real:</span> <span id="detMarkup">0x</span></div>
+                <div class="detail-item"><span>CPA Break-even:</span> <span id="detBreakEven" style="color:var(--orange); font-weight:bold;">0</span></div>
+                <div class="detail-item" style="border:0"><span>Lucro por Unidade:</span> <span id="detLucroUnit" style="color:var(--green); font-weight:bold;">0</span></div>
+            </div>
+
+            <div class="card">
+                <h3>Composição Financeira</h3>
+                <div class="comp-bar">
+                    <div id="barCusto" class="comp-item" style="background: #444;"></div>
+                    <div id="barMkt" class="comp-item" style="background: var(--orange);"></div>
+                    <div id="barTaxas" class="comp-item" style="background: var(--blue);"></div>
+                    <div id="barLucro" class="comp-item" style="background: var(--green);"></div>
+                </div>
+                <div class="detail-item"><span>(-) Logística:</span> <span id="detTotalBase">0</span></div>
+                <div class="detail-item"><span>(-) Marketing:</span> <span id="detMktReal">0</span></div>
+                <div class="detail-item" style="border:0"><span>(-) Taxas + Impostos:</span> <span id="detTaxasImp">0</span></div>
+            </div>
         </div>
     </div>
 
-    <div id="productList" class="product-list">
-        </div>
+    <h3>Projeção Mensal & Meta Diária</h3>
+    <div class="proj-grid" id="gridProj"></div>
 </div>
 
 <script>
-    let produtos = JSON.parse(localStorage.getItem('precific_db')) || [];
+    function aplicarSugestao(margemAlvo) {
+        const v = (id) => parseFloat(document.getElementById(id).value) || 0;
+        const custoTotalOrigem = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms')) / 100);
+        const percentuaisVariaveis = (v('taxaCheck') + v('taxaGate') + v('impVenda') + v('mktPerc') + v('contingencia')) / 100;
 
-    function addProduto() {
-        const novo = {
-            id: Date.now(),
-            nome: "PD-" + (produtos.length + 1).toString().padStart(2, '0'),
-            custo: 0, frete: 0, venda: 0,
-            impImp: 0, icms: 0, mkt: 25,
-            check: 0, gate: 0, impVenda: 0, taxaFixa: 0,
-            open: true
-        };
-        produtos.unshift(novo);
-        saveAndRender();
-    }
-
-    function toggleProduct(id) {
-        produtos = produtos.map(p => p.id === id ? {...p, open: !p.open} : p);
-        renderList();
-    }
-
-    function removeProduct(id, e) {
-        e.stopPropagation();
-        if(confirm("Deseja excluir este produto?")) {
-            produtos = produtos.filter(p => p.id !== id);
-            saveAndRender();
+        const divisor = 1 - percentuaisVariaveis - margemAlvo;
+        if (divisor > 0) {
+            document.getElementById('precoVenda').value = (custoTotalOrigem / divisor).toFixed(2);
+            calcular();
+        } else {
+            alert("A soma de taxas e CPA é superior a 100%. Reduza os custos.");
         }
     }
 
-    function updateVal(id, field, val) {
-        produtos = produtos.map(p => p.id === id ? {...p, [field]: parseFloat(val) || 0} : p);
-        saveNoRender(); // Salva silenciosamente enquanto digita
-        document.getElementById(`calc-${id}`).innerHTML = renderInnerCalc(produtos.find(p => p.id === id));
-    }
+    function calcular() {
+        const s = document.getElementById('moeda').value;
+        const v = (id) => isNaN(parseFloat(document.getElementById(id).value)) ? 0 : parseFloat(document.getElementById(id).value);
 
-    function saveNoRender() { localStorage.setItem('precific_db', JSON.stringify(produtos)); }
-    function saveAndRender() { saveNoRender(); renderList(); }
+        const custoLogistica = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms'))/100);
+        const precoVenda = v('precoVenda');
+        const mktPerc = v('mktPerc');
+        const vlrMkt = precoVenda * (mktPerc / 100);
+        const vlrTaxasImp = precoVenda * ((v('taxaCheck') + v('taxaGate') + v('impVenda') + v('contingencia')) / 100);
 
-    function renderList() {
-        const list = document.getElementById('productList');
-        const s = document.getElementById('globalCurrency').value;
+        const lucro = precoVenda - custoLogistica - vlrMkt - vlrTaxasImp;
+        const margem = precoVenda > 0 ? (lucro / precoVenda) * 100 : 0;
+        const markup = custoLogistica > 0 ? precoVenda / custoLogistica : 0;
+        const breakEvenCpa = precoVenda - custoLogistica - vlrTaxasImp;
+
+        // UI
+        const resL = document.getElementById('resLucro');
+        resL.innerText = `${s} ${lucro.toFixed(2)}`;
+        resL.style.color = lucro >= 0 ? 'var(--green)' : 'var(--red)';
         
-        list.innerHTML = produtos.map(p => {
-            const result = calcularLucro(p);
+        const resM = document.getElementById('resMargem');
+        resM.innerText = `Margem Final: ${margem.toFixed(1)}%`;
+        resM.style.color = margem >= 0 ? 'var(--green)' : 'var(--red)';
+
+        document.getElementById('detMarkup').innerText = `${markup.toFixed(2)}x`;
+        document.getElementById('detBreakEven').innerText = `${s} ${breakEvenCpa.toFixed(2)}`;
+        document.getElementById('detLucroUnit').innerText = `${s} ${lucro.toFixed(2)}`;
+        document.getElementById('detTotalBase').innerText = `${s} ${custoLogistica.toFixed(2)}`;
+        document.getElementById('detMktReal').innerText = `${s} ${vlrMkt.toFixed(2)}`;
+        document.getElementById('detTaxasImp').innerText = `${s} ${vlrTaxasImp.toFixed(2)}`;
+
+        // Bars
+        if(precoVenda > 0) {
+            document.getElementById('barCusto').style.width = (custoLogistica / precoVenda * 100) + "%";
+            document.getElementById('barMkt').style.width = (mktPerc) + "%";
+            document.getElementById('barTaxas').style.width = (vlrTaxasImp / precoVenda * 100) + "%";
+            document.getElementById('barLucro').style.width = (lucro > 0 ? (lucro / precoVenda * 100) : 0) + "%";
+        }
+
+        // Projeção: Atualizada para 10.000 Vendas
+        const escalas = [30, 150, 300, 1500, 3000, 10000];
+        document.getElementById('gridProj').innerHTML = escalas.map(q => {
+            const lucroTotal = lucro * q;
+            const pedidosDia = (q / 30).toFixed(q >= 300 ? 0 : 1);
             return `
-            <div class="product-item">
-                <div class="product-header" onclick="toggleProduct(${p.id})">
-                    <div class="product-title">
-                        <span style="color:var(--orange)">›</span>
-                        <input type="text" value="${p.nome}" onclick="event.stopPropagation()" onchange="updateVal(${p.id}, 'nome', this.value)" 
-                               style="background:transparent; border:none; color:white; font-weight:700; width:150px; font-size:1.1rem">
+                <div class="proj-card">
+                    <small>${q.toLocaleString()} VENDAS/MÊ</small>
+                    <div style="color:${lucroTotal >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:bold; margin-top:5px; font-size:1.1rem;">
+                        ${s} ${lucroTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}
                     </div>
-                    <div class="product-info-short">
-                        <span>Lucro: <strong style="color:${result.lucro >= 0 ? 'var(--green)' : 'var(--red)'}">${s} ${result.lucro.toFixed(2)}</strong></span>
-                        <button class="btn btn-danger" onclick="removeProduct(${p.id}, event)">REMOVER</button>
-                    </div>
+                    <span class="meta-text">Média de ${pedidosDia} pedidos/dia</span>
                 </div>
-                <div class="product-content ${p.open ? 'open' : ''}" id="calc-${p.id}">
-                    ${renderInnerCalc(p)}
-                </div>
-            </div>
             `;
         }).join('');
     }
-
-    function renderInnerCalc(p) {
-        const s = document.getElementById('globalCurrency').value;
-        const res = calcularLucro(p);
-        return `
-        <div class="layout">
-            <div>
-                <div class="form-card">
-                    <label>Preço de Venda Sugerido (Editável)</label>
-                    <input type="number" value="${p.venda}" oninput="updateVal(${p.id}, 'venda', this.value)" style="font-size:1.5rem; text-align:center; background:#000; color:var(--orange); font-weight:800">
-                    <div class="input-grid" style="margin-top:15px">
-                        <div><label>Custo Produto</label><input type="number" value="${p.custo}" oninput="updateVal(${p.id}, 'custo', this.value)"></div>
-                        <div><label>Frete Envio</label><input type="number" value="${p.frete}" oninput="updateVal(${p.id}, 'frete', this.value)"></div>
-                    </div>
-                </div>
-                <div class="form-card">
-                    <div class="input-grid">
-                        <div><label>Marketing (CPA %)</label><input type="number" value="${p.mkt}" oninput="updateVal(${p.id}, 'mkt', this.value)"></div>
-                        <div><label>Imposto Venda %</label><input type="number" value="${p.impVenda}" oninput="updateVal(${p.id}, 'impVenda', this.value)"></div>
-                    </div>
-                    <div class="input-grid">
-                        <div><label>Checkout %</label><input type="number" value="${p.check}" oninput="updateVal(${p.id}, 'check', this.value)"></div>
-                        <div><label>Gateway %</label><input type="number" value="${p.gate}" oninput="updateVal(${p.id}, 'gate', this.value)"></div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="res-main">
-                    <label>Lucro Líquido</label>
-                    <div class="big-val" style="color:${res.lucro >= 0 ? 'var(--green)' : 'var(--red)'}">${s} ${res.lucro.toFixed(2)}</div>
-                    <span class="status-pill">${res.margem.toFixed(1)}% de margem</span>
-                </div>
-                <div class="detail-row"><span>Break-even CPA:</span> <strong>${s} ${res.be.toFixed(2)}</strong></div>
-                <div class="detail-row"><span>Markup:</span> <strong>${res.markup.toFixed(2)}x</strong></div>
-                <div class="proj-grid">
-                    <div class="proj-box">30 Un.<br><strong>${s} ${(res.lucro*30).toFixed(0)}</strong></div>
-                    <div class="proj-box">300 Un.<br><strong>${s} ${(res.lucro*300).toFixed(0)}</strong></div>
-                    <div class="proj-box">3k Un.<br><strong>${s} ${(res.lucro*3000).toFixed(0)}</strong></div>
-                </div>
-            </div>
-        </div>`;
-    }
-
-    function calcularLucro(p) {
-        const custoBase = p.custo + p.frete;
-        const custoTotalOrigem = custoBase * (1 + (p.impImp + p.icms)/100);
-        const variaveisPerc = (p.mkt + p.impVenda + p.check + p.gate) / 100;
-        const variaveisVlr = (p.venda * variaveisPerc) + p.taxaFixa;
-        
-        const lucro = p.venda - custoTotalOrigem - variaveisVlr;
-        return {
-            lucro: lucro,
-            margem: p.venda > 0 ? (lucro / p.venda) * 100 : 0,
-            markup: custoTotalOrigem > 0 ? p.venda / custoTotalOrigem : 0,
-            be: p.venda - custoTotalOrigem - (variaveisVlr - (p.venda * p.mkt/100))
-        };
-    }
-
-    function exportarDados() {
-        const blob = new Blob([JSON.stringify(produtos)], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url; a.download = "meu_backlog_precificacao.json";
-        a.click();
-    }
-
-    function importarDados(input) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            produtos = JSON.parse(reader.result);
-            saveAndRender();
-        };
-        reader.readAsText(input.files[0]);
-    }
-
-    if(produtos.length === 0) addProduto();
-    renderList();
+    calcular();
 </script>
-
 </body>
 </html>
