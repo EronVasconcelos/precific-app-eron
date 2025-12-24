@@ -3,58 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrecificApp Dashboard Pro</title>
+    <title>PrecificApp Inteligente</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-grafite: #1c1c1c;
-            --card-gray: #2a2a2a;
-            --orange: #ff6600;
-            --text-white: #ffffff;
-            --green: #22c55e;
-            --red: #ef4444;
-            --border: #3d3d3d;
+            --bg: #121214; --card: #1c1c1e; --orange: #ff6600;
+            --white: #ffffff; --green: #22c55e; --red: #ef4444;
+            --blue: #3b82f6; --gray: #3d3d3d;
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-grafite); color: var(--text-white); margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        h1, h2, h3 { color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; font-size: 1rem; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 20px; font-size: 14px; }
+        .container { max-width: 1050px; margin: 0 auto; }
         
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--orange); padding-bottom: 10px; margin-bottom: 30px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; }
+        h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 20px; }
 
-        .grid-main { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
-        @media (max-width: 850px) { .grid-main { grid-template-columns: 1fr; } }
+        .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 
-        .card { background: var(--card-gray); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
-
-        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        label { display: block; font-size: 0.7rem; color: #bbbbbb; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
+        .card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid var(--gray); margin-bottom: 20px; }
         
-        input, select {
-            width: 100%; background: #121212; border: 1px solid var(--border);
-            padding: 12px; border-radius: 8px; color: #fff; outline: none; font-size: 15px; box-sizing: border-box;
-        }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { display: block; font-size: 0.7rem; color: #aaa; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
+        
+        input { width: 100%; background: #000; border: 1px solid var(--gray); padding: 12px; border-radius: 8px; color: #fff; outline: none; box-sizing: border-box; font-size: 1rem; }
         input:focus { border-color: var(--orange); }
 
-        .result-box { background: #121212; padding: 25px; border-radius: 15px; border: 2px solid var(--orange); text-align: center; }
-        .big-price { font-size: 3rem; font-weight: bold; margin: 5px 0; }
+        /* Módulo de Sugestão */
+        .suggestion-box { background: #252529; border: 1px dashed var(--orange); padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-sug { flex: 1; background: #333; border: 1px solid var(--orange); color: var(--white); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-sug:hover { background: var(--orange); color: #000; }
 
-        .detail-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
-        
-        /* Barra de Composição */
-        .comp-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin: 15px 0; background: #444; }
-        .comp-item { height: 100%; transition: width 0.3s; }
+        .result-main { background: #000; border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; }
+        .big-price { font-size: 3.5rem; font-weight: 800; margin: 10px 0; letter-spacing: -2px; }
 
-        .projection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 20px; }
-        .proj-card { background: var(--card-gray); padding: 12px; border-radius: 10px; text-align: center; border: 1px solid var(--border); font-size: 0.8rem; }
+        .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray); }
+        .status-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: #333; }
+
+        .comp-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 20px 0; background: #333; }
+        .comp-item { height: 100%; transition: width 0.4s ease; }
+
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 25px; }
+        .proj-card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--gray); text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1 style="margin:0;">PrecificApp Dashboard</h1>
-        <select id="moeda" style="width: 100px;" onchange="calcular()">
+        <h1 style="margin:0; font-size: 1.5rem; color: var(--orange);">PrecificApp <span style="color:white">Consultor</span></h1>
+        <select id="moeda" style="background:#000; color:white; border:1px solid var(--orange); padding:8px; border-radius:8px;" onchange="calcular()">
             <option value="R$">BRL (R$)</option>
             <option value="$">USD ($)</option>
             <option value="€">EUR (€)</option>
@@ -62,143 +61,158 @@
         </select>
     </div>
 
-    <div class="grid-main">
+    <div class="layout">
         <div>
             <div class="card">
-                <h3>1. Valores de Base</h3>
-                <div class="input-row">
-                    <div><label>Custo do Produto</label><input type="number" id="custoProd" oninput="calcular()"></div>
-                    <div><label>Frete (Envio)</label><input type="number" id="frete" oninput="calcular()"></div>
+                <h3>1. Custos Fixos & Logística</h3>
+                <div class="input-grid">
+                    <div><label>Custo Produto</label><input type="number" id="custoProd" placeholder="0.00" oninput="calcular()"></div>
+                    <div><label>Frete (Envio)</label><input type="number" id="frete" placeholder="0.00" oninput="calcular()"></div>
                 </div>
-                <label>Preço de Venda Final</label>
-                <input type="number" id="precoVenda" oninput="calcular()">
-            </div>
-
-            <div class="card">
-                <h3>2. Impostos e Marketing</h3>
-                <div class="input-row">
-                    <div><label>Imp. Importação (%)</label><input type="number" id="impImp" oninput="calcular()"></div>
-                    <div><label>ICMS / IOF (%)</label><input type="number" id="icms" oninput="calcular()"></div>
-                </div>
-                <div class="input-row">
-                    <div><label>Marketing (CPA Ideal %)</label><input type="number" id="mktPerc" value="25" oninput="calcular()"></div>
-                    <div><label>Imposto Venda / NF (%)</label><input type="number" id="impVenda" oninput="calcular()"></div>
+                <div class="input-grid">
+                    <div><label>Importação (%)</label><input type="number" id="impImp" placeholder="0" oninput="calcular()"></div>
+                    <div><label>ICMS / IOF (%)</label><input type="number" id="icms" placeholder="0" oninput="calcular()"></div>
                 </div>
             </div>
 
             <div class="card">
-                <h3>3. Taxas de Transação</h3>
-                <div class="input-row">
-                    <div><label>Checkout (%)</label><input type="number" id="taxaCheckout" oninput="calcular()"></div>
-                    <div><label>Gateway (%)</label><input type="number" id="taxaGateway" oninput="calcular()"></div>
+                <h3>2. Operação & Marketing</h3>
+                <div class="input-grid">
+                    <div><label>Checkout (%)</label><input type="number" id="taxaCheck" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Gateway (%)</label><input type="number" id="taxaGate" placeholder="0" oninput="calcular()"></div>
                 </div>
-                <label>Taxa Fixa por Pedido</label>
-                <input type="number" id="taxaFixa" oninput="calcular()">
+                <div class="input-grid">
+                    <div><label>Imposto Venda (%)</label><input type="number" id="impVenda" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Contingência (%)</label><input type="number" id="contingencia" placeholder="Ex: 2" oninput="calcular()"></div>
+                </div>
+                <label>CPA Marketing (%)</label>
+                <input type="number" id="mktPerc" value="25" oninput="calcular()">
+            </div>
+
+            <div class="suggestion-box">
+                <h3>💡 Sugestão Inteligente de Preço</h3>
+                <p style="font-size: 0.75rem; color: #ccc;">Baseado nos seus custos acima, escolha uma margem alvo:</p>
+                <div class="btn-group">
+                    <button class="btn-sug" onclick="aplicarSugestao(0.2)">20% Lucro</button>
+                    <button class="btn-sug" onclick="aplicarSugestao(0.3)">30% Lucro</button>
+                    <button class="btn-sug" onclick="aplicarSugestao(0.4)">40% Lucro</button>
+                </div>
             </div>
         </div>
 
         <div>
-            <div class="result-box">
-                <label style="color: var(--orange);">LUCRO LÍQUIDO POR VENDA</label>
+            <div class="result-main">
+                <label style="color: var(--orange);">Preço de Venda Definido</label>
+                <input type="number" id="precoVenda" style="text-align:center; font-size: 2.5rem; font-weight:800; background:transparent; border:none; margin: 10px 0;" placeholder="0.00" oninput="calcular()">
                 <div id="resLucro" class="big-price">0,00</div>
-                <div id="resMargem" style="font-weight: 700;">0% de margem</div>
+                <div id="resMargem" style="font-weight: 700; letter-spacing: 1px;">Margem Final: 0%</div>
             </div>
 
-            <div class="card" style="margin-top: 20px;">
-                <h3>Métricas de Equilíbrio</h3>
-                <div class="detail-item"><span>Markup:</span> <span id="detMarkup" style="font-weight:bold;">0x</span></div>
-                <div class="detail-item"><span>CPA Ideal (25%):</span> <span id="detCpaIdeal" style="color:var(--blue);">0</span></div>
-                <div class="detail-item" style="border:0"><span>CPA Break-even (Ponto Zero):</span> <span id="detBreakEven" style="color:var(--orange); font-weight:bold;">0</span></div>
+            <div class="card" style="margin-top: 20px; padding: 15px;">
+                <h3>Análise de Viabilidade</h3>
+                <div class="detail-item"><span>Markup Real:</span> <span id="detMarkup">0x</span></div>
+                <div class="detail-item"><span>Break-even CPA (Ponto Zero):</span> <span id="detBreakEven" style="color:var(--orange); font-weight:bold;">0</span></div>
+                <div class="detail-item" style="border:0"><span>Lucro por Unidade:</span> <span id="detLucroUnit" style="color:var(--green); font-weight:bold;">0</span></div>
             </div>
 
             <div class="card">
-                <h3>Composição do Preço</h3>
+                <h3>Composição Financeira</h3>
                 <div class="comp-bar">
-                    <div id="barCusto" class="comp-item" style="background: #555;"></div>
+                    <div id="barCusto" class="comp-item" style="background: #444;"></div>
                     <div id="barMkt" class="comp-item" style="background: var(--orange);"></div>
                     <div id="barTaxas" class="comp-item" style="background: var(--blue);"></div>
                     <div id="barLucro" class="comp-item" style="background: var(--green);"></div>
                 </div>
-                <div class="detail-item"><span>(-) Produto + Frete + Imp. Import:</span> <span id="detTotalBase">0</span></div>
-                <div class="detail-item"><span>(-) Marketing (CPA):</span> <span id="detMktReal">0</span></div>
-                <div class="detail-item"><span>(-) Taxas + Impostos Venda:</span> <span id="detTaxasImp">0</span></div>
+                <div class="detail-item"><span>(-) Produto + Logística:</span> <span id="detTotalBase">0</span></div>
+                <div class="detail-item"><span>(-) CPA Marketing:</span> <span id="detMktReal">0</span></div>
+                <div class="detail-item" style="border:0"><span>(-) Taxas + Impostos + Seguros:</span> <span id="detTaxasImp">0</span></div>
             </div>
         </div>
     </div>
 
-    <h3>Projeção de Escala Mensal</h3>
-    <div class="projection-grid" id="gridProj"></div>
+    <h3>Projeção de Escala de Lucro</h3>
+    <div class="proj-grid" id="gridProj"></div>
 </div>
 
 <script>
+    function aplicarSugestao(margemAlvo) {
+        const v = (id) => parseFloat(document.getElementById(id).value) || 0;
+        
+        // Custos que não dependem do preço de venda
+        const custoLogistica = v('custoProd') + v('frete');
+        const custoTotalOrigem = custoLogistica + (custoLogistica * ((v('impImp') + v('icms')) / 100));
+
+        // Percentuais que dependem do preço de venda
+        const percentuaisVariaveis = (v('taxaCheck') + v('taxaGate') + v('impVenda') + v('mktPerc') + v('contingencia')) / 100;
+
+        // Fórmula: Preço = Custos Fixos / (1 - % Variáveis - % Margem Alvo)
+        const divisor = 1 - percentuaisVariaveis - margemAlvo;
+
+        if (divisor > 0) {
+            const precoSugerido = custoTotalOrigem / divisor;
+            document.getElementById('precoVenda').value = precoSugerido.toFixed(2);
+            calcular();
+        } else {
+            alert("A soma dos impostos e taxas é muito alta para essa margem!");
+        }
+    }
+
     function calcular() {
         const s = document.getElementById('moeda').value;
-        const v = (id) => {
-            const val = parseFloat(document.getElementById(id).value);
-            return isNaN(val) ? 0 : val; // Resolve o erro NaN interpretando como 0
-        };
+        const v = (id) => parseFloat(document.getElementById(id).value) || 0;
 
-        // Entradas
         const custoProd = v('custoProd'), frete = v('frete'), precoVenda = v('precoVenda');
         const impImp = v('impImp'), icms = v('icms'), mktPerc = v('mktPerc'), impVenda = v('impVenda');
-        const taxaCheck = v('taxaCheckout'), taxaGate = v('taxaGateway'), taxaFixa = v('taxaFixa');
+        const taxaCheck = v('taxaCheck'), taxaGate = v('taxaGate'), contingencia = v('contingencia');
 
-        // Cálculo Base de Importação
-        const custoLogistica = custoProd + frete;
-        const vlrImpOri = custoLogistica * ((impImp + icms) / 100);
-        const custoTotalOrigem = custoLogistica + vlrImpOri;
+        // 1. Custo de Origem
+        const custoTotalOrigem = (custoProd + frete) * (1 + (impImp + icms)/100);
 
-        // Custos Variáveis de Venda (Taxas + Imposto sobre Nota)
-        const vlrTaxas = (precoVenda * ((taxaCheck + taxaGate) / 100)) + taxaFixa;
-        const vlrImpVenda = precoVenda * (impVenda / 100);
-        const totalTaxasEImpostos = vlrTaxas + vlrImpVenda;
+        // 2. Custos Variáveis (Checkout + Gateway + Imposto Venda + Contingência + CPA)
+        const percTotalVariavel = (taxaCheck + taxaGate + impVenda + contingencia + mktPerc) / 100;
+        const vlrTotalVariavel = precoVenda * percTotalVariavel;
 
-        // Marketing
-        const vlrMkt = precoVenda * (mktPerc / 100);
-
-        // Lucro e Métricas
-        const lucro = precoVenda - custoTotalOrigem - vlrMkt - totalTaxasEImpostos;
+        // 3. Resultado Final
+        const lucro = precoVenda - custoTotalOrigem - vlrTotalVariavel;
         const margem = precoVenda > 0 ? (lucro / precoVenda) * 100 : 0;
         const markup = custoTotalOrigem > 0 ? precoVenda / custoTotalOrigem : 0;
-        
-        // Break-even CPA: Preço de Venda - Custos Fixos - Taxas/Impostos
-        const breakEvenCpa = precoVenda - custoTotalOrigem - totalTaxasEImpostos;
+        const breakEvenCpa = precoVenda - custoTotalOrigem - (vlrTotalVariavel - (precoVenda * mktPerc/100));
 
-        // UI Update
+        // Atualizar Dashboard
         const resL = document.getElementById('resLucro');
         resL.innerText = `${s} ${lucro.toFixed(2)}`;
         resL.style.color = lucro >= 0 ? 'var(--green)' : 'var(--red)';
         
-        document.getElementById('resMargem').innerText = `${margem.toFixed(1)}% de margem`;
+        document.getElementById('resMargem').innerText = `Margem Final: ${margem.toFixed(1)}%`;
         document.getElementById('resMargem').style.color = margem >= 0 ? 'var(--green)' : 'var(--red)';
 
         document.getElementById('detMarkup').innerText = `${markup.toFixed(2)}x`;
-        document.getElementById('detCpaIdeal').innerText = `${s} ${vlrMkt.toFixed(2)}`;
         document.getElementById('detBreakEven').innerText = `${s} ${breakEvenCpa.toFixed(2)}`;
+        document.getElementById('detLucroUnit').innerText = `${s} ${lucro.toFixed(2)}`;
 
         document.getElementById('detTotalBase').innerText = `${s} ${custoTotalOrigem.toFixed(2)}`;
-        document.getElementById('detMktReal').innerText = `${s} ${vlrMkt.toFixed(2)}`;
-        document.getElementById('detTaxasImp').innerText = `${s} ${totalTaxasEImpostos.toFixed(2)}`;
+        document.getElementById('detMktReal').innerText = `${s} ${(precoVenda * mktPerc/100).toFixed(2)}`;
+        document.getElementById('detTaxasImp').innerText = `${s} ${(vlrTotalVariavel - (precoVenda * mktPerc/100)).toFixed(2)}`;
 
-        // Barra de Composição (Visual)
+        // Barra Visual
         if(precoVenda > 0) {
             document.getElementById('barCusto').style.width = (custoTotalOrigem / precoVenda * 100) + "%";
-            document.getElementById('barMkt').style.width = (vlrMkt / precoVenda * 100) + "%";
-            document.getElementById('barTaxas').style.width = (totalTaxasEImpostos / precoVenda * 100) + "%";
+            document.getElementById('barMkt').style.width = (mktPerc) + "%";
+            document.getElementById('barTaxas').style.width = ((vlrTotalVariavel - (precoVenda * mktPerc/100)) / precoVenda * 100) + "%";
             document.getElementById('barLucro').style.width = (lucro > 0 ? (lucro / precoVenda * 100) : 0) + "%";
         }
 
-        // Projeção
-        const escalas = [10, 50, 100, 500, 1000, 5000];
+        // Escala
+        const escalas = [10, 50, 100, 500, 1000, 10000];
         document.getElementById('gridProj').innerHTML = escalas.map(q => `
             <div class="proj-card">
-                <small>${q} Vendas</small>
-                <div style="color:${lucro >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:bold;">${s} ${(lucro * q).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
+                <small>${q} VENDAS</small>
+                <div style="color:${lucro >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:bold; margin-top:5px;">
+                    ${s} ${(lucro * q).toLocaleString('pt-BR', {minimumFractionDigits: 2})}
+                </div>
             </div>
         `).join('');
     }
-
-    calcular();
 </script>
 </body>
 </html>
