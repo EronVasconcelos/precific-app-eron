@@ -22,7 +22,7 @@
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 20px; font-size: 14px; line-height: 1.5; transition: background 0.3s, color 0.3s; }
         .container { max-width: 1050px; margin: 0 auto; }
         
-        /* HEADER EM UMA LINHA */
+        /* HEADER - TUDO EM UMA LINHA */
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; gap: 10px; flex-wrap: nowrap; }
         .brand h1 { margin: 0; font-size: 1.8rem; letter-spacing: -1px; color: var(--text-main); line-height: 1.2; }
         .brand span { color: var(--orange); }
@@ -40,10 +40,8 @@
         .btn-new-top { background: var(--green); color: white; border: none; }
         .btn-export { color: var(--orange); border-color: var(--orange); }
         .theme-toggle { width: 42px; padding: 0; font-size: 1.1rem; }
-        select#moeda { width: auto; min-width: 90px; }
+        select#moeda { width: auto; min-width: 95px; }
 
-        /* CONTEÚDO */
-        h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 20px; }
         .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .header { flex-wrap: wrap; } }
 
@@ -53,27 +51,21 @@
         
         input { width: 100%; background: var(--input-bg); border: 1px solid var(--gray); padding: 12px; border-radius: 8px; color: var(--text-main); outline: none; font-size: 1rem; box-sizing: border-box; }
 
-        /* RESULTADOS E ESPAÇAMENTO SOLICITADO */
         .result-main { background: var(--input-bg); border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; }
         .editable-price-container { background: var(--card); border-radius: 12px; padding: 10px; margin: 15px auto; max-width: 250px; border: 1px solid var(--gray); }
         .editable-price-container input { background: transparent; border: none; text-align: center; font-size: 2.8rem; font-weight: 800; color: var(--text-main); padding: 0; margin: 0; width: 100%; }
 
+        /* AJUSTES DE ESPAÇAMENTO LUCRO */
         .big-price { font-size: 3.5rem; font-weight: 800; margin: 10px 0 0 0; letter-spacing: -2px; }
         .lucro-label { font-size: 0.8rem; font-weight: 600; color: var(--green); margin-top: -8px; margin-bottom: 22px; display: block; }
         #resMargem { font-weight: 700; color: var(--green); margin-top: 5px; display: block; }
-
-        .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray); }
-        .comp-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 20px 0; background: var(--gray); }
-        .comp-item { height: 100%; transition: width 0.4s ease; }
 
         .btn-action { padding: 12px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; transition: 0.2s; text-decoration: none; display: inline-block; text-align: center; }
         .btn-save { background: var(--green); color: white; width: 100%; margin-top: 15px; }
         .btn-pix { background: var(--green); color: white; width: 100%; max-width: 320px; margin-top: 15px; font-size: 0.9rem; }
 
-        /* RODAPÉ MANTIDO EM DUAS LINHAS */
         .footer-thanks { text-align: center; margin: 60px 0 20px; padding: 40px 20px; background: var(--card); border-radius: 20px; border: 1px solid var(--gray); }
         .pix-info { font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; font-weight: 600; line-height: 1.8; }
-        .legal-footer { text-align: center; padding: 20px; color: var(--text-gray); font-size: 0.7rem; border-top: 1px solid var(--gray); letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -93,41 +85,29 @@
                 <option value="€">EUR (€)</option>
                 <option value="£" selected>GBP (£)</option>
             </select>
-            <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">🌓</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
         </div>
     </div>
 
     <div class="layout">
-        <div>
-            <div class="card">
-                <h3>1. Identificação e Custos</h3>
-                <label>Nome do Produto</label>
-                <input type="text" id="nomeProd" placeholder="Ex: Produto A" style="margin-bottom: 15px;">
-                <div class="input-grid">
-                    <div><label>Custo Produto</label><input type="number" id="custoProd" placeholder="0.00" oninput="calcular()"></div>
-                    <div><label>Frete (Envio)</label><input type="number" id="frete" placeholder="0.00" oninput="calcular()"></div>
-                </div>
-            </div>
-            <div class="card" style="background: var(--input-bg); border: 1px dashed var(--orange);">
-                <h3>💡 Consultoria de Margem</h3>
-                <div class="btn-group">
-                    <button class="btn-sug" onclick="aplicarSugestao(0.2)">20% Lucro</button>
-                    <button class="btn-sug" onclick="aplicarSugestao(0.3)">30% Lucro</button>
-                    <button class="btn-sug" onclick="aplicarSugestao(0.4)">40% Lucro</button>
-                </div>
+        <div class="card">
+            <h3>Custos do Produto</h3>
+            <label>Nome do Produto</label>
+            <input type="text" id="nomeProd" placeholder="Ex: Relógio Luxo">
+            <div class="input-grid" style="margin-top: 15px;">
+                <div><label>Custo Unitário</label><input type="number" id="custoProd" oninput="calcular()"></div>
+                <div><label>Frete</label><input type="number" id="frete" oninput="calcular()"></div>
             </div>
         </div>
 
-        <div>
-            <div class="result-main">
-                <label style="color: var(--orange); font-weight: bold;">PREÇO DE VENDA DEFINIDO</label>
-                <div class="editable-price-container">
-                    <input type="number" id="precoVenda" placeholder="0.00" oninput="calcular()">
-                </div>
-                <div id="resLucro" class="big-price">0,00</div>
-                <span class="lucro-label">(Lucro Estimado)</span>
-                <span id="resMargem" style="font-weight: 700; color: var(--green);">Margem Final: 0.0%</span>
+        <div class="result-main">
+            <label style="color: var(--orange); font-weight: bold;">PREÇO DE VENDA</label>
+            <div class="editable-price-container">
+                <input type="number" id="precoVenda" value="100" oninput="calcular()">
             </div>
+            <div id="resLucro" class="big-price">0,00</div>
+            <span class="lucro-label">(Lucro Estimado)</span>
+            <span id="resMargem">Margem Final: 0.0%</span>
             <button class="btn-action btn-save" onclick="salvarHistorico()">SALVAR NO HISTÓRICO</button>
         </div>
     </div>
@@ -139,6 +119,7 @@
             CNPJ: 49.276.400/0001-13 <br>
             OTIMIZA NEGOCIOS DIGITAIS LTDA | MEDIATION DIGITAL
         </div>
+        <p id="pixStatus" style="font-size: 0.75rem; color: var(--green); margin-top: 10px; font-weight: bold;"></p>
     </div>
 </div>
 
@@ -146,17 +127,15 @@
     function toggleTheme() {
         const body = document.body;
         const isLight = body.getAttribute('data-theme') === 'light';
-        if (isLight) { body.removeAttribute('data-theme'); localStorage.setItem('theme', 'dark'); }
-        else { body.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); }
+        body.setAttribute('data-theme', isLight ? 'dark' : 'light');
     }
-    if (localStorage.getItem('theme') === 'light') document.body.setAttribute('data-theme', 'light');
 
     function calcular() {
         const s = document.getElementById('moeda').value;
         const v = (id) => parseFloat(document.getElementById(id).value) || 0;
-        const precoVenda = v('precoVenda');
-        const lucro = precoVenda - (v('custoProd') + v('frete'));
-        const margem = precoVenda > 0 ? (lucro / precoVenda) * 100 : 0;
+        const lucro = v('precoVenda') - (v('custoProd') + v('frete'));
+        const margem = v('precoVenda') > 0 ? (lucro / v('precoVenda')) * 100 : 0;
+        
         document.getElementById('resLucro').innerText = `${s} ${lucro.toFixed(2)}`;
         document.getElementById('resLucro').style.color = lucro >= 0 ? 'var(--green)' : 'var(--red)';
         document.getElementById('resMargem').innerText = `Margem Final: ${margem.toFixed(1)}%`;
@@ -164,7 +143,9 @@
 
     function fazerPix() {
         const chavePix = "b8e85c5f-973c-4a64-8d9b-7b26e5f620fe";
-        navigator.clipboard.writeText(chavePix).then(() => { alert("Chave Pix copiada!"); });
+        navigator.clipboard.writeText(chavePix).then(() => {
+            document.getElementById('pixStatus').innerText = "CHAVE PIX COPIADA!";
+        });
     }
 
     function novoProjeto() {
@@ -172,8 +153,8 @@
         calcular();
     }
 
-    function salvarHistorico() { alert("Simulação salva!"); }
-    function exportarCSV() { alert("Exportando dados..."); }
+    function exportarCSV() { alert("Exportando..."); }
+    function salvarHistorico() { alert("Salvo!"); }
 
     calcular();
 </script>
