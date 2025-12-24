@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PrecificApp Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F2F2F7;
+            --card: #FFFFFF;
+            --text: #1C1C1E;
+            --accent: #E5E5EA;
+            --green: #34C759;
+            --red: #FF3B30;
+            --primary: #007AFF;
+        }
+
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card: #1C1C1E;
+            --text: #FFFFFF;
+            --accent: #3A3A3C;
+            --primary: #0A84FF;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .app-container { width: 100%; max-width: 400px; }
+
+        .glass-card {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+
+        .input-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #8E8E93;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        .price-display {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid var(--accent);
+            margin-top: 10px;
+        }
+
+        .price-display h1 { margin: 0; font-size: 36px; letter-spacing: -1px; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+
+        button {
+            flex: 1;
+            padding: 16px;
+            border-radius: 14px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-main { background: var(--primary); color: white; }
+        .btn-secondary { background: var(--accent); color: var(--text); }
+        button:active { transform: scale(0.98); }
+
+        .history-item {
+            background: var(--card);
+            padding: 16px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--accent);
+        }
+
+        .badge-lucro { font-size: 12px; padding: 4px 8px; border-radius: 6px; background: var(--bg); }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="app-container">
+    <div class="header">
+        <h2 style="margin:0; font-weight: 600;">PrecificApp</h2>
+        <button class="btn-secondary" style="padding: 8px 12px; flex: none;" onclick="toggleTheme()">🌓</button>
+    </div>
+
+    <div class="glass-card">
+        <span class="input-label">Produto</span>
+        <input type="text" id="nome" placeholder="Nome do item">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+                <span class="input-label">Custo (R$)</span>
+                <input type="number" id="custo" placeholder="0.00" oninput="calcular()">
+            </div>
+            <div>
+                <span class="input-label">Margem (%)</span>
+                <input type="number" id="margem" placeholder="0" oninput="calcular()">
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+                <span class="input-label">Imposto (%)</span>
+                <input type="number" id="imposto" placeholder="0" oninput="calcular()">
+            </div>
+            <div>
+                <span class="input-label">Taxas (%)</span>
+                <input type="number" id="taxas" placeholder="0" oninput="calcular()">
+            </div>
+        </div>
+
+        <div class="price-display">
+            <span class="input-label">Venda Sugerida</span>
+            <h1 id="precoFinal" style="color: var(--primary);">R$ 0,00</h1>
+            <p id="lucroTexto" style="margin: 8px 0; font-size: 14px; font-weight: 600;">Lucro Líquido: R$ 0,00</p>
+            <div id="roiTexto" style="font-size: 12px; color: #8E8E93;">ROI: 0%</div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-main" onclick="salvarNoHistorico()">Salvar</button>
+            <button class="btn-secondary" onclick="exportarCSV()">Exportar</button>
+        </div>
+    </div>
+
+    <div id="historicoLista">
+        <span class="input-label">Últimos Lançamentos</span>
+    </div>
+</div>
+
+<script>
+    function toggleTheme() {
+        const b = document.body;
+        b.setAttribute('data-theme', b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    }
+
+    function calcular() {
+        const v = (id) => parseFloat(document.getElementById(id).value) || 0;
+        const custo = v('custo'), imp = v('imposto'), tax = v('taxas'), marg = v('margem');
+
+        const divisor = (100 - (imp + tax + marg)) / 100;
+        const preco = divisor > 0 ? custo / divisor : 0;
+        
+        const vlrImp = preco * (imp/100);
+        const vlrTax = preco * (tax/100);
+        const lucro = preco - custo - vlrImp - vlrTax;
+        const roi = custo > 0 ? (lucro / custo) * 100 : 0;
+
+        document.getElementById('precoFinal').innerText = `R$ ${preco.toFixed(2)}`;
+        const lTxt = document.getElementById('lucroTexto');
+        lTxt.innerText = `Lucro Líquido: R$ ${lucro.toFixed(2)}`;
+        lTxt.style.color = lucro >= 0 ? 'var(--green)' : 'var(--red)';
+        
+        document.getElementById('roiTexto').innerText = `Retorno (ROI): ${roi.toFixed(1)}%`;
+        
+        return { 
+            nome: document.getElementById('nome').value || "Produto s/ Nome", 
+            preco: preco.toFixed(2), 
+            lucro: lucro.toFixed(2) 
+        };
+    }
+
+    function salvarNoHistorico() {
+        const dados = calcular();
+        let hist = JSON.parse(localStorage.getItem('precific_hist_v2') || '[]');
+        hist.unshift(dados);
+        localStorage.setItem('precific_hist_v2', JSON.stringify(hist.slice(0, 8)));
+        render();
+    }
+
+    function render() {
+        const lista = document.getElementById('historicoLista');
+        const hist = JSON.parse(localStorage.getItem('precific_hist_v2') || '[]');
+        const html = hist.map(i => `
+            <div class="history-item">
+                <div>
+                    <div style="font-weight:600; font-size: 14px;">${i.nome}</div>
+                    <div style="font-size:12px; color:#8E8E93">Preço: R$ ${i.preco}</div>
+                </div>
+                <div class="badge-lucro" style="color: ${i.lucro >= 0 ? 'var(--green)' : 'var(--red)'}">
+                    R$ ${i.lucro}
+                </div>
+            </div>
+        `).join('');
+        lista.innerHTML = '<span class="input-label">Últimos Lançamentos</span>' + html;
+    }
+
+    function exportarCSV() {
+        const hist = JSON.parse(localStorage.getItem('precific_hist_v2') || '[]');
+        if(hist.length === 0) return alert("Histórico vazio!");
+        let csv = "data:text/csv;charset=utf-8,Produto;Preco;Lucro\n";
+        hist.forEach(i => csv += `${i.nome};${i.preco};${i.lucro}\n`);
+        const link = document.createElement("a");
+        link.href = encodeURI(csv);
+        link.download = "meu_lucro.csv";
+        link.click();
+    }
+
+    render();
+</script>
+</body>
+</html>
