@@ -6,7 +6,6 @@
     <title>PrecificEcom - Pro Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Variáveis de Tema Escuro (Padrão) */
         :root {
             --bg: #121214; --card: #1c1c1e; --orange: #ff6600;
             --white: #ffffff; --green: #22c55e; --red: #ef4444;
@@ -14,7 +13,6 @@
             --text-gray: #888888; --text-main: #ffffff;
         }
 
-        /* Variáveis de Tema Claro */
         [data-theme="light"] {
             --bg: #f0f2f5; --card: #ffffff; --white: #121214;
             --gray: #d1d5db; --input-bg: #f9fafb;
@@ -62,7 +60,7 @@
         .btn-save { background: var(--green); color: white; width: 100%; margin-top: 0; }
         .btn-new { background: var(--green); color: white; padding: 8px 15px; font-size: 0.8rem; }
         .btn-export { background: var(--bg); color: var(--orange); border: 1px solid var(--orange); padding: 8px 15px; font-size: 0.8rem; }
-        .btn-pix { background: var(--orange); color: white; width: 100%; max-width: 320px; margin-top: 15px; font-size: 0.9rem; }
+        .btn-pix { background: var(--green); color: white; width: 100%; max-width: 320px; margin-top: 15px; font-size: 0.9rem; }
         .btn-action:hover { opacity: 0.8; transform: translateY(-1px); }
 
         .history-section { margin-top: 40px; border-top: 2px solid var(--gray); padding-top: 20px; }
@@ -74,8 +72,7 @@
         .pix-info { font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; font-weight: 500; line-height: 1.8; }
         .legal-footer { text-align: center; padding: 20px; color: var(--text-gray); font-size: 0.7rem; border-top: 1px solid var(--gray); letter-spacing: 0.5px; }
         
-        /* Botão de Tema */
-        .theme-toggle { background: var(--gray); border: none; color: var(--text-main); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .theme-toggle { background: var(--input-bg); border: 1px solid var(--gray); color: var(--text-main); padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; height: 40px; }
     </style>
 </head>
 <body>
@@ -84,18 +81,20 @@
     <div class="header">
         <div class="brand">
             <h1><span>Precific</span>Ecom</h1>
-            <span style="font-size: 0.75rem; color: var(--text-gray); display: block; margin-top: 2px; font-weight: 600;">By Eron Vasconcelos</span>
+            <span style="font-size: 0.75rem; color: #888888; display: block; margin-top: 2px; font-weight: 600;">By Eron Vasconcelos</span>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">🌓</button>
             <button class="btn-action btn-new" onclick="novoProjeto()">+ NOVO</button>
             <button class="btn-action btn-export" onclick="exportarCSV()">EXPORTAR CSV</button>
-            <select id="moeda" style="width: auto;" onchange="calcular()">
-                <option value="R$">BRL (R$)</option>
-                <option value="$">USD ($)</option>
-                <option value="€">EUR (€)</option>
-                <option value="£" selected>GBP (£)</option>
-            </select>
+            <div style="display: flex; gap: 5px; align-items: center; background: var(--input-bg); border-radius: 8px; border: 1px solid var(--gray); padding-right: 5px;">
+                <select id="moeda" style="width: auto; border: none;" onchange="calcular()">
+                    <option value="R$">BRL (R$)</option>
+                    <option value="$">USD ($)</option>
+                    <option value="€">EUR (€)</option>
+                    <option value="£" selected>GBP (£)</option>
+                </select>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema" style="border: none;">🌓</button>
+            </div>
         </div>
     </div>
 
@@ -197,8 +196,8 @@
 <script>
     function toggleTheme() {
         const body = document.body;
-        const currentTheme = body.getAttribute('data-theme');
-        if (currentTheme === 'light') {
+        const isLight = body.getAttribute('data-theme') === 'light';
+        if (isLight) {
             body.removeAttribute('data-theme');
             localStorage.setItem('theme', 'dark');
         } else {
@@ -207,7 +206,6 @@
         }
     }
 
-    // Carregar tema salvo
     if (localStorage.getItem('theme') === 'light') {
         document.body.setAttribute('data-theme', 'light');
     }
