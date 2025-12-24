@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrecificApp Inteligente</title>
+    <title>PrecificApp Estratégico</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #121214; --card: #1c1c1e; --orange: #ff6600;
             --white: #ffffff; --green: #22c55e; --red: #ef4444;
-            --blue: #3b82f6; --gray: #3d3d3d;
+            --blue: #3b82f6; --gray: #3d3d3d; --input-bg: #252529;
         }
 
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 20px; font-size: 14px; }
@@ -22,30 +22,30 @@
         @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 
         .card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid var(--gray); margin-bottom: 20px; }
-        
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
         label { display: block; font-size: 0.7rem; color: #aaa; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
         
         input { width: 100%; background: #000; border: 1px solid var(--gray); padding: 12px; border-radius: 8px; color: #fff; outline: none; box-sizing: border-box; font-size: 1rem; }
         input:focus { border-color: var(--orange); }
 
-        /* Módulo de Sugestão */
         .suggestion-box { background: #252529; border: 1px dashed var(--orange); padding: 15px; border-radius: 12px; margin-bottom: 20px; }
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-sug { flex: 1; background: #333; border: 1px solid var(--orange); color: var(--white); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-sug { flex: 1; background: #333; border: 1px solid var(--orange); color: var(--white); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 0.8rem; }
         .btn-sug:hover { background: var(--orange); color: #000; }
 
         .result-main { background: #000; border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; }
+        .editable-price-container { background: var(--input-bg); border-radius: 12px; padding: 10px; margin: 15px auto; max-width: 250px; border: 1px solid var(--gray); }
+        .editable-price-container input { background: transparent; border: none; text-align: center; font-size: 2.8rem; font-weight: 800; color: var(--white); padding: 0; margin: 0; width: 100%; }
+
         .big-price { font-size: 3.5rem; font-weight: 800; margin: 10px 0; letter-spacing: -2px; }
-
         .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray); }
-        .status-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: #333; }
-
+        
         .comp-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 20px 0; background: #333; }
         .comp-item { height: 100%; transition: width 0.4s ease; }
 
-        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 25px; }
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 25px; }
         .proj-card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--gray); text-align: center; }
+        .meta-text { display: block; font-size: 0.7rem; color: #888; margin-top: 8px; font-weight: 600; font-style: italic; }
     </style>
 </head>
 <body>
@@ -57,7 +57,7 @@
             <option value="R$">BRL (R$)</option>
             <option value="$">USD ($)</option>
             <option value="€">EUR (€)</option>
-            <option value="£">GBP (£)</option>
+            <option value="£" selected>GBP (£)</option>
         </select>
     </div>
 
@@ -83,15 +83,14 @@
                 </div>
                 <div class="input-grid">
                     <div><label>Imposto Venda (%)</label><input type="number" id="impVenda" placeholder="0" oninput="calcular()"></div>
-                    <div><label>Contingência (%)</label><input type="number" id="contingencia" placeholder="Ex: 2" oninput="calcular()"></div>
+                    <div><label>Contingência (%)</label><input type="number" id="contingencia" placeholder="0" oninput="calcular()"></div>
                 </div>
-                <label>CPA Marketing (%)</label>
+                <label>Marketing (CPA Ideal %)</label>
                 <input type="number" id="mktPerc" value="25" oninput="calcular()">
             </div>
 
             <div class="suggestion-box">
-                <h3>💡 Sugestão Inteligente de Preço</h3>
-                <p style="font-size: 0.75rem; color: #ccc;">Baseado nos seus custos acima, escolha uma margem alvo:</p>
+                <h3>💡 Consultoria de Margem</h3>
                 <div class="btn-group">
                     <button class="btn-sug" onclick="aplicarSugestao(0.2)">20% Lucro</button>
                     <button class="btn-sug" onclick="aplicarSugestao(0.3)">30% Lucro</button>
@@ -102,16 +101,18 @@
 
         <div>
             <div class="result-main">
-                <label style="color: var(--orange);">Preço de Venda Definido</label>
-                <input type="number" id="precoVenda" style="text-align:center; font-size: 2.5rem; font-weight:800; background:transparent; border:none; margin: 10px 0;" placeholder="0.00" oninput="calcular()">
+                <label style="color: var(--orange); font-weight: bold;">PREÇO DE VENDA DEFINIDO</label>
+                <div class="editable-price-container">
+                    <input type="number" id="precoVenda" placeholder="0.00" oninput="calcular()">
+                </div>
                 <div id="resLucro" class="big-price">0,00</div>
-                <div id="resMargem" style="font-weight: 700; letter-spacing: 1px;">Margem Final: 0%</div>
+                <div id="resMargem" style="font-weight: 700; letter-spacing: 1px; color: var(--green);">Margem Final: 0%</div>
             </div>
 
             <div class="card" style="margin-top: 20px; padding: 15px;">
                 <h3>Análise de Viabilidade</h3>
                 <div class="detail-item"><span>Markup Real:</span> <span id="detMarkup">0x</span></div>
-                <div class="detail-item"><span>Break-even CPA (Ponto Zero):</span> <span id="detBreakEven" style="color:var(--orange); font-weight:bold;">0</span></div>
+                <div class="detail-item"><span>CPA Break-even:</span> <span id="detBreakEven" style="color:var(--orange); font-weight:bold;">0</span></div>
                 <div class="detail-item" style="border:0"><span>Lucro por Unidade:</span> <span id="detLucroUnit" style="color:var(--green); font-weight:bold;">0</span></div>
             </div>
 
@@ -123,96 +124,85 @@
                     <div id="barTaxas" class="comp-item" style="background: var(--blue);"></div>
                     <div id="barLucro" class="comp-item" style="background: var(--green);"></div>
                 </div>
-                <div class="detail-item"><span>(-) Produto + Logística:</span> <span id="detTotalBase">0</span></div>
-                <div class="detail-item"><span>(-) CPA Marketing:</span> <span id="detMktReal">0</span></div>
-                <div class="detail-item" style="border:0"><span>(-) Taxas + Impostos + Seguros:</span> <span id="detTaxasImp">0</span></div>
+                <div class="detail-item"><span>(-) Logística:</span> <span id="detTotalBase">0</span></div>
+                <div class="detail-item"><span>(-) Marketing:</span> <span id="detMktReal">0</span></div>
+                <div class="detail-item" style="border:0"><span>(-) Taxas + Impostos:</span> <span id="detTaxasImp">0</span></div>
             </div>
         </div>
     </div>
 
-    <h3>Projeção de Escala de Lucro</h3>
+    <h3>Projeção Mensal & Meta Diária</h3>
     <div class="proj-grid" id="gridProj"></div>
 </div>
 
 <script>
     function aplicarSugestao(margemAlvo) {
         const v = (id) => parseFloat(document.getElementById(id).value) || 0;
-        
-        // Custos que não dependem do preço de venda
-        const custoLogistica = v('custoProd') + v('frete');
-        const custoTotalOrigem = custoLogistica + (custoLogistica * ((v('impImp') + v('icms')) / 100));
-
-        // Percentuais que dependem do preço de venda
+        const custoTotalOrigem = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms')) / 100);
         const percentuaisVariaveis = (v('taxaCheck') + v('taxaGate') + v('impVenda') + v('mktPerc') + v('contingencia')) / 100;
 
-        // Fórmula: Preço = Custos Fixos / (1 - % Variáveis - % Margem Alvo)
         const divisor = 1 - percentuaisVariaveis - margemAlvo;
-
         if (divisor > 0) {
-            const precoSugerido = custoTotalOrigem / divisor;
-            document.getElementById('precoVenda').value = precoSugerido.toFixed(2);
+            document.getElementById('precoVenda').value = (custoTotalOrigem / divisor).toFixed(2);
             calcular();
         } else {
-            alert("A soma dos impostos e taxas é muito alta para essa margem!");
+            alert("Reduza as taxas para atingir essa margem.");
         }
     }
 
     function calcular() {
         const s = document.getElementById('moeda').value;
-        const v = (id) => parseFloat(document.getElementById(id).value) || 0;
+        const v = (id) => isNaN(parseFloat(document.getElementById(id).value)) ? 0 : parseFloat(document.getElementById(id).value);
 
-        const custoProd = v('custoProd'), frete = v('frete'), precoVenda = v('precoVenda');
-        const impImp = v('impImp'), icms = v('icms'), mktPerc = v('mktPerc'), impVenda = v('impVenda');
-        const taxaCheck = v('taxaCheck'), taxaGate = v('taxaGate'), contingencia = v('contingencia');
+        const custoLogistica = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms'))/100);
+        const precoVenda = v('precoVenda');
+        const mktPerc = v('mktPerc');
+        const vlrMkt = precoVenda * (mktPerc / 100);
+        const vlrTaxasImp = precoVenda * ((v('taxaCheck') + v('taxaGate') + v('impVenda') + v('contingencia')) / 100);
 
-        // 1. Custo de Origem
-        const custoTotalOrigem = (custoProd + frete) * (1 + (impImp + icms)/100);
-
-        // 2. Custos Variáveis (Checkout + Gateway + Imposto Venda + Contingência + CPA)
-        const percTotalVariavel = (taxaCheck + taxaGate + impVenda + contingencia + mktPerc) / 100;
-        const vlrTotalVariavel = precoVenda * percTotalVariavel;
-
-        // 3. Resultado Final
-        const lucro = precoVenda - custoTotalOrigem - vlrTotalVariavel;
+        const lucro = precoVenda - custoLogistica - vlrMkt - vlrTaxasImp;
         const margem = precoVenda > 0 ? (lucro / precoVenda) * 100 : 0;
-        const markup = custoTotalOrigem > 0 ? precoVenda / custoTotalOrigem : 0;
-        const breakEvenCpa = precoVenda - custoTotalOrigem - (vlrTotalVariavel - (precoVenda * mktPerc/100));
+        const markup = custoLogistica > 0 ? precoVenda / custoLogistica : 0;
+        const breakEvenCpa = precoVenda - custoLogistica - vlrTaxasImp;
 
-        // Atualizar Dashboard
+        // Dashboard
         const resL = document.getElementById('resLucro');
         resL.innerText = `${s} ${lucro.toFixed(2)}`;
         resL.style.color = lucro >= 0 ? 'var(--green)' : 'var(--red)';
-        
         document.getElementById('resMargem').innerText = `Margem Final: ${margem.toFixed(1)}%`;
         document.getElementById('resMargem').style.color = margem >= 0 ? 'var(--green)' : 'var(--red)';
-
         document.getElementById('detMarkup').innerText = `${markup.toFixed(2)}x`;
         document.getElementById('detBreakEven').innerText = `${s} ${breakEvenCpa.toFixed(2)}`;
         document.getElementById('detLucroUnit').innerText = `${s} ${lucro.toFixed(2)}`;
+        document.getElementById('detTotalBase').innerText = `${s} ${custoLogistica.toFixed(2)}`;
+        document.getElementById('detMktReal').innerText = `${s} ${vlrMkt.toFixed(2)}`;
+        document.getElementById('detTaxasImp').innerText = `${s} ${vlrTaxasImp.toFixed(2)}`;
 
-        document.getElementById('detTotalBase').innerText = `${s} ${custoTotalOrigem.toFixed(2)}`;
-        document.getElementById('detMktReal').innerText = `${s} ${(precoVenda * mktPerc/100).toFixed(2)}`;
-        document.getElementById('detTaxasImp').innerText = `${s} ${(vlrTotalVariavel - (precoVenda * mktPerc/100)).toFixed(2)}`;
-
-        // Barra Visual
+        // Bars
         if(precoVenda > 0) {
-            document.getElementById('barCusto').style.width = (custoTotalOrigem / precoVenda * 100) + "%";
+            document.getElementById('barCusto').style.width = (custoLogistica / precoVenda * 100) + "%";
             document.getElementById('barMkt').style.width = (mktPerc) + "%";
-            document.getElementById('barTaxas').style.width = ((vlrTotalVariavel - (precoVenda * mktPerc/100)) / precoVenda * 100) + "%";
+            document.getElementById('barTaxas').style.width = (vlrTaxasImp / precoVenda * 100) + "%";
             document.getElementById('barLucro').style.width = (lucro > 0 ? (lucro / precoVenda * 100) : 0) + "%";
         }
 
-        // Escala
-        const escalas = [10, 50, 100, 500, 1000, 10000];
-        document.getElementById('gridProj').innerHTML = escalas.map(q => `
-            <div class="proj-card">
-                <small>${q} VENDAS</small>
-                <div style="color:${lucro >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:bold; margin-top:5px;">
-                    ${s} ${(lucro * q).toLocaleString('pt-BR', {minimumFractionDigits: 2})}
+        // Projeção com Meta Diária
+        const escalas = [30, 150, 300, 1500, 3000];
+        document.getElementById('gridProj').innerHTML = escalas.map(q => {
+            const lucroTotal = lucro * q;
+            const pedidosDia = (q / 30).toFixed(q >= 300 ? 0 : 1); // Arredonda se for número grande
+            return `
+                <div class="proj-card">
+                    <small>${q} VENDAS/MÊS</small>
+                    <div style="color:${lucroTotal >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:bold; margin-top:5px; font-size:1.1rem;">
+                        ${s} ${lucroTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}
+                    </div>
+                    <span class="meta-text">Média de ${pedidosDia} pedidos/dia</span>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
+    calcular();
 </script>
 </body>
 </html>
