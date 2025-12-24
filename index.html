@@ -10,6 +10,7 @@
             --bg: #121214; --card: #1c1c1e; --orange: #ff6600;
             --white: #ffffff; --green: #22c55e; --red: #ef4444;
             --blue: #3b82f6; --gray: #3d3d3d; --input-bg: #252529;
+            --text-gray: #888888;
         }
 
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 20px; font-size: 14px; line-height: 1.5; }
@@ -18,7 +19,7 @@
         .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; gap: 10px; flex-wrap: wrap; }
         .brand h1 { margin: 0; font-size: 1.8rem; letter-spacing: -1px; }
         .brand span { color: var(--orange); }
-        .by-eron { font-size: 0.75rem; color: #888; display: block; margin-top: 2px; font-weight: 600; }
+        .by-eron { font-size: 0.75rem; color: var(--text-gray); display: block; margin-top: 2px; font-weight: 600; }
 
         h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 20px; }
 
@@ -52,7 +53,7 @@
 
         .btn-action { padding: 12px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; transition: 0.2s; text-decoration: none; display: inline-block; text-align: center; }
         .btn-save { background: var(--green); color: white; width: 100%; margin-top: 15px; }
-        .btn-new { background: var(--blue); color: white; padding: 8px 15px; font-size: 0.8rem; }
+        .btn-new { background: var(--green); color: white; padding: 8px 15px; font-size: 0.8rem; }
         .btn-export { background: #121214; color: var(--orange); border: 1px solid var(--orange); padding: 8px 15px; font-size: 0.8rem; }
         .btn-pix { background: var(--orange); color: #000; width: 100%; max-width: 320px; margin-top: 15px; font-size: 0.9rem; }
         .btn-action:hover { opacity: 0.8; transform: translateY(-1px); }
