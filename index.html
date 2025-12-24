@@ -22,8 +22,8 @@
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 20px; font-size: 14px; line-height: 1.5; transition: background 0.3s, color 0.3s; }
         .container { max-width: 1050px; margin: 0 auto; }
         
-        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; gap: 10px; flex-wrap: wrap; }
-        .brand h1 { margin: 0; font-size: 1.8rem; letter-spacing: -1px; color: var(--text-main); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; gap: 10px; flex-wrap: wrap; }
+        .brand h1 { margin: 0; font-size: 1.8rem; letter-spacing: -1px; color: var(--text-main); line-height: 1.2; }
         .brand span { color: var(--orange); }
 
         h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 20px; }
@@ -35,8 +35,35 @@
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
         label { display: block; font-size: 0.7rem; color: var(--text-gray); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
         
-        input, select { width: 100%; background: var(--input-bg); border: 1px solid var(--gray); padding: 12px; border-radius: 8px; color: var(--text-main); outline: none; font-size: 1rem; box-sizing: border-box; }
+        input { width: 100%; background: var(--input-bg); border: 1px solid var(--gray); padding: 12px; border-radius: 8px; color: var(--text-main); outline: none; font-size: 1rem; box-sizing: border-box; }
         input:focus { border-color: var(--orange); }
+
+        /* Ajuste de Moeda e Botões Superiores */
+        select#moeda, .theme-toggle, .btn-new-top, .btn-export {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            border: 1px solid var(--gray);
+            background: var(--input-bg);
+            color: var(--text-main);
+            line-height: 1; /* Centraliza o texto verticalmente */
+            cursor: pointer;
+        }
+
+        select#moeda { 
+            width: auto; 
+            padding-right: 10px;
+        }
+
+        .btn-new-top { background: var(--green); color: white; border: none; text-transform: uppercase; }
+        .btn-export { color: var(--orange); border-color: var(--orange); text-transform: uppercase; }
+        .theme-toggle { width: 42px; padding: 0; font-size: 1.1rem; }
 
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .btn-sug { flex: 1; background: var(--input-bg); border: 1px solid var(--orange); color: var(--text-main); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 0.8rem; }
@@ -57,9 +84,7 @@
         .meta-text { display: block; font-size: 0.7rem; color: var(--text-gray); margin-top: 8px; font-weight: 600; }
 
         .btn-action { padding: 12px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; transition: 0.2s; text-decoration: none; display: inline-block; text-align: center; }
-        .btn-save { background: var(--green); color: white; width: 100%; margin-top: 0; }
-        .btn-new { background: var(--green); color: white; padding: 8px 15px; font-size: 0.8rem; }
-        .btn-export { background: var(--bg); color: var(--orange); border: 1px solid var(--orange); padding: 8px 15px; font-size: 0.8rem; }
+        .btn-save { background: var(--green); color: white; width: 100%; margin-top: 15px; }
         .btn-pix { background: var(--green); color: white; width: 100%; max-width: 320px; margin-top: 15px; font-size: 0.9rem; }
         .btn-action:hover { opacity: 0.8; transform: translateY(-1px); }
 
@@ -69,12 +94,8 @@
         .btn-delete { background: var(--red); color: white; width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; }
 
         .footer-thanks { text-align: center; margin: 60px 0 20px; padding: 40px 20px; background: var(--card); border-radius: 20px; border: 1px solid var(--gray); }
-        .pix-info { font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; font-weight: 500; line-height: 1.8; }
+        .pix-info { font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; font-weight: 600; line-height: 1.8; }
         .legal-footer { text-align: center; padding: 20px; color: var(--text-gray); font-size: 0.7rem; border-top: 1px solid var(--gray); letter-spacing: 0.5px; }
-        
-        /* Botão de Tema Separado */
-        .theme-toggle { background: var(--input-bg); border: 1px solid var(--gray); color: var(--text-main); padding: 0; border-radius: 8px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: 0.2s; }
-        .theme-toggle:hover { border-color: var(--orange); }
     </style>
 </head>
 <body>
@@ -83,12 +104,12 @@
     <div class="header">
         <div class="brand">
             <h1><span>Precific</span>Ecom</h1>
-            <span style="font-size: 0.75rem; color: #888888; display: block; margin-top: 2px; font-weight: 600;">By Eron Vasconcelos</span>
+            <span style="font-size: 0.75rem; color: #888888; display: block; margin-top: 4px; font-weight: 600;">By Eron Vasconcelos</span>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <button class="btn-action btn-new" onclick="novoProjeto()">+ NOVO</button>
-            <button class="btn-action btn-export" onclick="exportarCSV()">EXPORTAR CSV</button>
-            <select id="moeda" style="width: auto; height: 40px;" onchange="calcular()">
+            <button class="btn-new-top" onclick="novoProjeto()">+ NOVO</button>
+            <button class="btn-export" onclick="exportarCSV()">Exportar CSV</button>
+            <select id="moeda" onchange="calcular()">
                 <option value="R$">BRL (R$)</option>
                 <option value="$">USD ($)</option>
                 <option value="€">EUR (€)</option>
@@ -240,7 +261,11 @@
 
     function calcular() {
         const s = document.getElementById('moeda').value;
-        const v = (id) => isNaN(parseFloat(document.getElementById(id).value)) ? 0 : parseFloat(document.getElementById(id).value);
+        const v = (id) => {
+            const val = parseFloat(document.getElementById(id).value);
+            return isNaN(val) ? 0 : val;
+        };
+
         const custoLogistica = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms'))/100);
         const precoVenda = v('precoVenda');
         const vlrMkt = precoVenda * (v('mktPerc') / 100);
