@@ -64,8 +64,9 @@
         .btn-new-top { background: var(--green); color: white; border: none; }
 
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        /* Botões brancos conforme referência visual antiga */
-        .btn-sug { flex: 1; background: #f8fafc; border: 1px solid var(--orange); color: #0f172a; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.8rem; transition: 0.2s; }
+        
+        /* BOTÕES CONSULTORIA AJUSTADOS */
+        .btn-sug { flex: 1; background: transparent; border: 1px solid var(--orange); color: var(--text-main); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.8rem; transition: 0.2s; }
         .btn-sug:hover { background: var(--orange); color: white; }
 
         /* Resultado */
@@ -118,6 +119,7 @@
                 <option value="R$" selected>BRL (R$)</option>
                 <option value="$">USD ($)</option>
                 <option value="€">EUR (€)</option>
+                <option value="£">GBP (£)</option>
             </select>
             <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
         </div>
@@ -288,20 +290,20 @@
     function salvarHistorico() {
         const nome = document.getElementById('nomeProd').value || "Produto";
         const item = { id: Date.now(), nome, venda: document.getElementById('precoVenda').value, lucro: document.getElementById('resLucro').innerText, margem: document.getElementById('resMargem').innerText, moeda: document.getElementById('resSinal').innerText, data: new Date().toLocaleDateString() };
-        let lista = JSON.parse(localStorage.getItem('precific_final_v10') || '[]');
+        let lista = JSON.parse(localStorage.getItem('precific_final_v11') || '[]');
         lista.unshift(item);
-        localStorage.setItem('precific_final_v10', JSON.stringify(lista));
+        localStorage.setItem('precific_final_v11', JSON.stringify(lista));
         renderHistorico();
     }
 
     function excluirItem(id) {
-        let lista = JSON.parse(localStorage.getItem('precific_final_v10') || '[]');
-        localStorage.setItem('precific_final_v10', JSON.stringify(lista.filter(i => i.id !== id)));
+        let lista = JSON.parse(localStorage.getItem('precific_final_v11') || '[]');
+        localStorage.setItem('precific_final_v11', JSON.stringify(lista.filter(i => i.id !== id)));
         renderHistorico();
     }
 
     function renderHistorico() {
-        const lista = JSON.parse(localStorage.getItem('precific_final_v10') || '[]');
+        const lista = JSON.parse(localStorage.getItem('precific_final_v11') || '[]');
         const div = document.getElementById('historicoLista');
         if (lista.length === 0) {
             div.innerHTML = '<div style="border: 2px dashed var(--gray); border-radius: 16px; padding: 40px; text-align: center; color: var(--text-gray); font-size: 1.1rem; margin-top: 15px;">Nenhum produto salvo no histórico.</div>';
@@ -322,7 +324,7 @@
     }
 
     function exportarCSV() {
-        const lista = JSON.parse(localStorage.getItem('precific_final_v10') || '[]');
+        const lista = JSON.parse(localStorage.getItem('precific_final_v11') || '[]');
         if(lista.length === 0) return alert("Histórico vazio!");
         let csv = "Produto;Venda;Lucro;Margem;Data\n" + lista.map(i => `${i.nome};${i.venda};${i.lucro};${i.margem};${i.data}`).join("\n");
         const link = document.createElement("a");
