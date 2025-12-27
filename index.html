@@ -20,7 +20,6 @@
             --white: #ffffff; 
             --green: #22c55e; 
             --red: #ef4444;
-            --blue: #3b82f6; 
             --gray: rgba(255, 255, 255, 0.1); 
             --input-bg: rgba(15, 23, 42, 0.8);
             --text-gray: #94a3b8; 
@@ -33,37 +32,24 @@
             --text-gray: #6b7280; --text-main: #1f2937;
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            background-attachment: fixed;
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 20px; 
-            font-size: 14px; 
-            line-height: 1.5; 
-            transition: background 0.3s, color 0.3s; 
-            min-height: 100vh;
-        }
-        
+        body { font-family: 'Inter', sans-serif; background: var(--bg); background-attachment: fixed; color: var(--text-main); margin: 0; padding: 20px; font-size: 14px; min-height: 100vh; }
         .container { max-width: 1050px; margin: 0 auto; }
         
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--orange); padding-bottom: 15px; margin-bottom: 30px; gap: 10px; flex-wrap: wrap; }
         .brand h1 { margin: 0; font-size: 1.8rem; letter-spacing: -1px; color: var(--text-main); line-height: 1.2; }
         .brand span { color: var(--orange); }
 
-        /* Centralizar cabeçalho no mobile */
         @media (max-width: 600px) {
             .header { justify-content: center; text-align: center; }
             .brand { width: 100%; margin-bottom: 10px; }
         }
 
-        h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 20px; }
+        h3 { color: var(--orange); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 20px; margin-top: 40px; }
 
         .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 
-        .card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid var(--gray); margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); backdrop-filter: blur(10px); }
+        .card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid var(--gray); margin-bottom: 20px; backdrop-filter: blur(10px); }
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
         label { display: block; font-size: 0.7rem; color: var(--text-gray); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
         
@@ -74,44 +60,41 @@
             height: 42px; display: flex; align-items: center; justify-content: center; padding: 0 15px;
             border-radius: 8px; font-weight: bold; border: 1px solid var(--gray); background: var(--input-bg); color: var(--text-main); cursor: pointer;
         }
-
         .btn-new-top { background: var(--green); color: white; border: none; text-transform: uppercase; }
         .btn-export { color: var(--orange); border-color: var(--orange); text-transform: uppercase; }
 
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-sug { flex: 1; background: var(--input-bg); border: 1px solid var(--orange); color: var(--text-main); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 0.8rem; }
+        .btn-sug { flex: 1; background: var(--input-bg); border: 1px solid var(--orange); color: var(--text-main); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
         .btn-sug:hover { background: var(--orange); color: white; }
 
         .result-main { background: var(--input-bg); border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; }
-        .editable-price-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; margin: 15px auto; max-width: 250px; border: 1px solid var(--gray); }
-        .editable-price-container input { background: transparent; border: none; text-align: center; font-size: 2.8rem; font-weight: 800; color: var(--text-main); padding: 0; margin: 0; width: 100%; }
-
-        /* ESTILO DO PREÇO COM MOEDA AO LADO */
-        .price-wrapper { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px; }
-        .currency-label { font-size: 2.2rem; font-weight: 800; color: var(--green); }
-        .big-price { font-size: 3.5rem; font-weight: 800; color: var(--green); letter-spacing: -2px; }
+        .editable-price-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; margin: 15px auto; max-width: 250px; border: 1px solid var(--gray); position: relative; }
+        .editable-price-container input { background: transparent; border: none; text-align: center; font-size: 2.8rem; font-weight: 800; color: var(--text-main); padding: 0; width: 100%; }
         
-        /* SELO DE MARGEM FINAL */
-        .margem-badge { display: inline-block; margin-top: 10px; padding: 5px 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid var(--green); border-radius: 20px; color: var(--green); font-weight: 700; font-size: 0.9rem; }
+        .price-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
+        .currency-label { font-size: 2.5rem; font-weight: 800; color: var(--green); }
+        .big-price { font-size: 3.5rem; font-weight: 800; color: var(--green); letter-spacing: -2px; }
+        .lucro-sub { font-size: 0.75rem; color: var(--green); display: block; font-weight: bold; margin-top: -5px; }
+
+        .margem-badge { display: inline-block; margin-top: 15px; padding: 8px 20px; background: rgba(34, 197, 94, 0.1); border: 1px solid var(--green); border-radius: 30px; color: var(--green); font-weight: 700; font-size: 0.95rem; }
         
         .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray); }
 
-        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 25px; }
-        .proj-card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--gray); text-align: center; }
-        .meta-text { display: block; font-size: 0.7rem; color: var(--text-gray); margin-top: 8px; font-weight: 600; }
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; }
+        .proj-card { background: var(--card); padding: 25px; border-radius: 16px; border: 1px solid var(--gray); text-align: center; }
+        .proj-card small { color: var(--text-gray); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; }
+        .proj-val { font-size: 1.6rem; font-weight: 800; color: var(--green); margin: 10px 0; }
+        .meta-text { color: var(--text-gray); font-size: 0.8rem; }
 
-        .btn-action { padding: 12px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; width: 100%; transition: 0.2s; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-action { padding: 15px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-transform: uppercase; width: 100%; transition: 0.2s; }
         .btn-save { background: var(--green); color: white; margin-top: 15px; }
-        .btn-pix { background: var(--green); color: white; max-width: 320px; margin-top: 15px; font-size: 0.9rem; }
-        .btn-action:hover { opacity: 0.8; transform: translateY(-1px); }
-
-        .history-section { margin-top: 40px; border-top: 2px solid var(--gray); padding-top: 20px; }
-        .history-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 15px; }
+        
+        .history-list { margin-top: 15px; }
         .history-item { background: var(--card); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--gray); margin-bottom: 10px; }
-        .btn-delete { background: var(--red); color: white; width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; }
+        .empty-history { border: 2px dashed var(--gray); border-radius: 16px; padding: 40px; text-align: center; color: var(--text-gray); font-size: 1.1rem; }
 
         .footer-thanks { text-align: center; margin: 60px 0 20px; padding: 40px 20px; background: var(--card); border-radius: 20px; border: 1px solid var(--gray); }
-        .escalar-text { color: var(--text-gray); max-width: 600px; margin: 15px auto; font-size: 0.95rem; }
+        .escalar-text { color: var(--text-gray); margin: 15px auto; max-width: 600px; font-size: 0.95rem; }
     </style>
 </head>
 <body>
@@ -120,18 +103,17 @@
     <div class="header">
         <div class="brand">
             <h1><span>Precific</span>Ecom</h1>
-            <span style="font-size: 0.75rem; color: #888888; display: block; margin-top: 4px; font-weight: 600;">By Eron Vasconcelos</span>
+            <span style="font-size: 0.75rem; color: #888888; font-weight: 600;">By Eron Vasconcelos</span>
         </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
+        <div style="display: flex; gap: 10px;">
             <button class="btn-new-top" onclick="novoProjeto()">+ NOVO</button>
             <button class="btn-export" onclick="exportarCSV()">Exportar CSV</button>
             <select id="moeda" onchange="calcular()">
                 <option value="R$" selected>BRL (R$)</option>
                 <option value="$">USD ($)</option>
                 <option value="€">EUR (€)</option>
-                <option value="£">GBP (£)</option>
             </select>
-            <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">🌓</button>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
         </div>
     </div>
 
@@ -140,26 +122,26 @@
             <div class="card">
                 <h3>1. Identificação e Custos</h3>
                 <label>Nome do Produto</label>
-                <input type="text" id="nomeProd" placeholder="Ex: Produto A" style="margin-bottom: 15px;">
-                <div class="input-grid">
-                    <div><label>Custo Produto</label><input type="number" id="custoProd" placeholder="0.00" oninput="calcular()"></div>
-                    <div><label>Frete (Envio)</label><input type="number" id="frete" placeholder="0.00" oninput="calcular()"></div>
+                <input type="text" id="nomeProd" placeholder="Ex: Produto A">
+                <div class="input-grid" style="margin-top:15px;">
+                    <div><label>Custo Produto</label><input type="number" id="custoProd" oninput="calcular()"></div>
+                    <div><label>Frete (Envio)</label><input type="number" id="frete" oninput="calcular()"></div>
                 </div>
                 <div class="input-grid">
-                    <div><label>Importação (%)</label><input type="number" id="impImp" placeholder="0" oninput="calcular()"></div>
-                    <div><label>ICMS / IOF (%)</label><input type="number" id="icms" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Importação (%)</label><input type="number" id="impImp" oninput="calcular()"></div>
+                    <div><label>Taxas Fixas (%)</label><input type="number" id="icms" oninput="calcular()"></div>
                 </div>
             </div>
 
             <div class="card">
                 <h3>2. Operação & Marketing</h3>
                 <div class="input-grid">
-                    <div><label>Checkout (%)</label><input type="number" id="taxaCheck" placeholder="0" oninput="calcular()"></div>
-                    <div><label>Gateway (%)</label><input type="number" id="taxaGate" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Checkout (%)</label><input type="number" id="taxaCheck" oninput="calcular()"></div>
+                    <div><label>Gateway (%)</label><input type="number" id="taxaGate" oninput="calcular()"></div>
                 </div>
                 <div class="input-grid">
-                    <div><label>Imposto Venda (%)</label><input type="number" id="impVenda" placeholder="0" oninput="calcular()"></div>
-                    <div><label>Trocas/Devoluções (%)</label><input type="number" id="contingencia" placeholder="0" oninput="calcular()"></div>
+                    <div><label>Imposto Venda (%)</label><input type="number" id="impVenda" oninput="calcular()"></div>
+                    <div><label>Contingência (%)</label><input type="number" id="contingencia" oninput="calcular()"></div>
                 </div>
                 <label>Marketing (CPA Ideal %)</label>
                 <input type="number" id="mktPerc" value="25" oninput="calcular()">
@@ -177,54 +159,44 @@
 
         <div>
             <div class="result-main">
-                <label style="color: var(--orange); font-weight: bold;">PREÇO DE VENDA DEFINIDO</label>
+                <label style="color: var(--orange); font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;">PREÇO DE VENDA DEFINIDO</label>
                 <div class="editable-price-container">
-                    <input type="number" id="precoVenda" placeholder="0.00" oninput="calcular()">
+                    <input type="number" id="precoVenda" oninput="calcular()" placeholder="0,00">
                 </div>
                 
                 <div class="price-wrapper">
-                    <span id="resMoeda" class="currency-label">R$</span>
+                    <span id="resSinal" class="currency-label">R$</span>
                     <div id="resLucro" class="big-price">0,00</div>
                 </div>
+                <span class="lucro-sub">(LUCRO ESTIMADO)</span>
                 
-                <div id="resMargem" class="margem-badge">Margem Final: 0%</div>
+                <div id="resMargem" class="margem-badge">Margem Final: 0.0%</div>
             </div>
 
-            <div class="card" style="margin-top: 20px; margin-bottom: 10px;">
+            <div class="card" style="margin-top: 20px;">
                 <h3>Análise de Viabilidade</h3>
-                <div class="detail-item"><span>Markup Real:</span> <span id="detMarkup" style="font-weight: bold;">0x</span></div>
-                <div class="detail-item"><span>CPA Break-even:</span> <span id="detBreakEven" style="color:var(--orange); font-weight:bold;">0</span></div>
-                <div class="detail-item"><span>Lucro Unitário:</span> <span id="detLucroUnit" style="color:var(--green); font-weight:bold;">0</span></div>
-                
-                <div class="detail-item" style="margin-top:15px;"><span>(-) Logística Total:</span> <span id="detTotalBase">0</span></div>
-                <div class="detail-item"><span>(-) CPA Marketing:</span> <span id="detMktReal">0</span></div>
-                <div class="detail-item" style="border:0"><span>(-) Taxas + Impostos:</span> <span id="detTaxasImp">0</span></div>
+                <div class="detail-item"><span>Markup Real:</span> <span id="detMarkup">0x</span></div>
+                <div class="detail-item"><span>CPA Break-even:</span> <span id="detBreakEven">0</span></div>
+                <div class="detail-item" style="border:0"><span>Lucro Unitário:</span> <span id="detLucroUnit" style="color:var(--green); font-weight:bold;">0</span></div>
             </div>
             <button class="btn-action btn-save" onclick="salvarHistorico()">SALVAR NO HISTÓRICO</button>
         </div>
     </div>
 
-    <h3>Projeção Mensal & Meta Diária</h3>
+    <h3>PROJEÇÃO MENSAL & META DIÁRIA</h3>
     <div class="proj-grid" id="gridProj"></div>
 
-    <div class="history-section">
-        <h3>Histórico de Produtos Salvos</h3>
-        <div id="historicoLista" class="history-list"></div>
-    </div>
+    <hr style="margin-top: 40px; border: 0; border-top: 1px solid var(--gray);">
+
+    <h3>HISTÓRICO DE PRODUTOS SALVOS</h3>
+    <div id="historicoLista" class="history-list"></div>
 
     <div class="footer-thanks">
-        <h2 style="color: var(--orange); margin-top:0;">Obrigado por utilizar o PrecificEcom!</h2>
+        <h2 style="color: var(--orange); margin: 0;">Obrigado por utilizar o PrecificEcom!</h2>
         <p class="escalar-text">Ferramenta desenvolvida para ajudar empreendedores a escalarem com lucro real e sem dores de cabeça.</p>
-        <button class="btn-action btn-pix" onclick="fazerPix()">APOIAR O PROJETO (VIA PIX)</button>
-        <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; font-weight: 600; line-height: 1.8;">
-            CNPJ: 49.276.400/0001-13 <br>
-            OTIMIZA NEGOCIOS DIGITAIS LTDA | MEDIATION DIGITAL
-        </div>
+        <button class="btn-action" style="background: var(--green); color: white; max-width: 320px; margin-top: 15px;" onclick="fazerPix()">APOIAR O PROJETO (VIA PIX)</button>
+        <div style="font-size: 0.7rem; color: var(--text-gray); margin-top: 20px;">CNPJ: 49.276.400/0001-13</div>
         <p id="pixStatus" style="font-size: 0.75rem; color: var(--green); margin-top: 10px; font-weight: bold;"></p>
-    </div>
-
-    <div class="legal-footer" style="text-align: center; padding: 20px; color: var(--text-gray); font-size: 0.7rem; border-top: 1px solid var(--gray);">
-        © 2025 PrecificEcom - Todos os direitos reservados.
     </div>
 </div>
 
@@ -234,36 +206,15 @@
     }
 
     function toggleTheme() {
-        const body = document.body;
-        const isLight = body.getAttribute('data-theme') === 'light';
-        if (isLight) {
-            body.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    if (localStorage.getItem('theme') === 'light') {
-        document.body.setAttribute('data-theme', 'light');
+        const b = document.body;
+        b.getAttribute('data-theme') === 'light' ? b.removeAttribute('data-theme') : b.setAttribute('data-theme', 'light');
     }
 
     function fazerPix() {
-        const chavePix = "b8e85c5f-973c-4a64-8d9b-7b26e5f620fe";
-        navigator.clipboard.writeText(chavePix).then(() => {
+        navigator.clipboard.writeText("b8e85c5f-973c-4a64-8d9b-7b26e5f620fe").then(() => {
             document.getElementById('pixStatus').innerText = "CHAVE PIX COPIADA!";
-            alert("Chave Pix copiada com sucesso!");
+            alert("Chave Pix copiada!");
         });
-    }
-
-    function novoProjeto() {
-        if(confirm("Deseja zerar todos os campos para uma nova precificação?")) {
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(i => { if(i.id !== 'mktPerc') i.value = ""; });
-            document.getElementById('mktPerc').value = "25";
-            calcular();
-        }
     }
 
     function aplicarSugestao(margemAlvo) {
@@ -279,90 +230,72 @@
 
     function calcular() {
         const s = document.getElementById('moeda').value;
-        const v = (id) => {
-            const val = parseFloat(document.getElementById(id).value);
-            return isNaN(val) ? 0 : val;
-        };
+        const v = (id) => parseFloat(document.getElementById(id).value) || 0;
 
-        const custoLogistica = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms'))/100);
+        const custoLog = (v('custoProd') + v('frete')) * (1 + (v('impImp') + v('icms'))/100);
         const precoVenda = v('precoVenda');
         const vlrMkt = precoVenda * (v('mktPerc') / 100);
-        const vlrTaxasImp = precoVenda * ((v('taxaCheck') + v('taxaGate') + v('impVenda') + v('contingencia')) / 100);
-        const lucro = precoVenda - custoLogistica - vlrMkt - vlrTaxasImp;
+        const vlrTaxas = precoVenda * ((v('taxaCheck') + v('taxaGate') + v('impVenda') + v('contingencia')) / 100);
+        const lucro = precoVenda - custoLog - vlrMkt - vlrTaxas;
         const margem = precoVenda > 0 ? (lucro / precoVenda) * 100 : 0;
-        const markup = custoLogistica > 0 ? precoVenda / custoLogistica : 0;
-        const breakEvenCpa = precoVenda - custoLogistica - vlrTaxasImp;
+        const markup = custoLog > 0 ? precoVenda / custoLog : 0;
+        const breakEven = precoVenda - custoLog - vlrTaxas;
 
-        // Atualiza símbolo e valor
-        document.getElementById('resMoeda').innerText = s;
-        document.getElementById('resLucro').innerText = `${lucro.toFixed(2)}`;
-        
-        const corFinal = lucro >= 0 ? 'var(--green)' : 'var(--red)';
-        document.getElementById('resLucro').style.color = corFinal;
-        document.getElementById('resMoeda').style.color = corFinal;
-
+        document.getElementById('resSinal').innerText = s;
+        document.getElementById('resLucro').innerText = lucro.toFixed(2).replace('.', ',');
+        const cor = lucro >= 0 ? 'var(--green)' : 'var(--red)';
+        document.getElementById('resLucro').style.color = cor;
+        document.getElementById('resSinal').style.color = cor;
         document.getElementById('resMargem').innerText = `Margem Final: ${margem.toFixed(1)}%`;
+        
         document.getElementById('detMarkup').innerText = `${markup.toFixed(2)}x`;
-        document.getElementById('detBreakEven').innerText = `${s} ${breakEvenCpa.toFixed(2)}`;
-        document.getElementById('detLucroUnit').innerText = `${s} ${lucro.toFixed(2)}`;
-        document.getElementById('detTotalBase').innerText = `${s} ${custoLogistica.toFixed(2)}`;
-        document.getElementById('detMktReal').innerText = `${s} ${vlrMkt.toFixed(2)}`;
-        document.getElementById('detTaxasImp').innerText = `${s} ${vlrTaxasImp.toFixed(2)}`;
+        document.getElementById('detBreakEven').innerText = `${s} ${breakEven.toFixed(2).replace('.', ',')}`;
+        document.getElementById('detLucroUnit').innerText = `${s} ${lucro.toFixed(2).replace('.', ',')}`;
 
-        const escalas = [30, 300, 1500, 3000];
+        const escalas = [30, 150, 300, 1500, 3000, 10000];
         document.getElementById('gridProj').innerHTML = escalas.map(q => {
             const lT = lucro * q;
-            return `<div class="proj-card"><small>${q} VENDAS/MÊS</small><div style="color:${lT >= 0 ? 'var(--green)' : 'var(--red)'}; font-weight:bold; font-size:1.1rem;">${s} ${lT.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div><span class="meta-text">Média de ${(q/30).toFixed(0)} pedidos/dia</span></div>`;
+            return `
+                <div class="proj-card">
+                    <small>${q} VENDAS/MÊS</small>
+                    <div class="proj-val" style="color:${lT >= 0 ? 'var(--green)' : 'var(--red)'}">${s} ${lT.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
+                    <div class="meta-text">Média de ${(q/30).toFixed(0)} pedidos/dia</div>
+                </div>`;
         }).join('');
     }
 
     function salvarHistorico() {
-        const nome = document.getElementById('nomeProd').value || "Produto Sem Nome";
-        const venda = document.getElementById('precoVenda').value || "0";
-        const lucro = document.getElementById('resLucro').innerText;
-        const margem = document.getElementById('resMargem').innerText;
-        const moeda = document.getElementById('moeda').value;
-        const item = { id: Date.now(), nome, venda, lucro, margem, moeda, data: new Date().toLocaleDateString() };
-        let lista = JSON.parse(localStorage.getItem('precificecom_final_db') || '[]');
+        const nome = document.getElementById('nomeProd').value || "Produto";
+        const item = { id: Date.now(), nome, lucro: document.getElementById('resLucro').innerText, moeda: document.getElementById('resSinal').innerText, data: new Date().toLocaleDateString() };
+        let lista = JSON.parse(localStorage.getItem('precific_db') || '[]');
         lista.unshift(item);
-        localStorage.setItem('precificecom_final_db', JSON.stringify(lista.slice(0, 15)));
-        renderHistorico();
-    }
-
-    function excluirItem(id) {
-        let lista = JSON.parse(localStorage.getItem('precificecom_final_db') || '[]');
-        lista = lista.filter(i => i.id !== id);
-        localStorage.setItem('precificecom_final_db', JSON.stringify(lista));
+        localStorage.setItem('precific_db', JSON.stringify(lista));
         renderHistorico();
     }
 
     function renderHistorico() {
-        const lista = JSON.parse(localStorage.getItem('precificecom_final_db') || '[]');
-        document.getElementById('historicoLista').innerHTML = lista.map(i => `
+        const lista = JSON.parse(localStorage.getItem('precific_db') || '[]');
+        const div = document.getElementById('historicoLista');
+        if (lista.length === 0) {
+            div.innerHTML = '<div class="empty-history">Nenhum produto salvo no histórico.</div>';
+            return;
+        }
+        div.innerHTML = lista.map(i => `
             <div class="history-item">
-                <div class="history-info"><strong>${i.nome}</strong><br><small>${i.data}</small></div>
-                <div style="display: flex; align-items: center;">
-                    <div style="text-align: right; margin-right: 15px;">
-                        <small>Venda: ${i.moeda} ${i.venda}</small><br>
-                        <strong style="color:var(--green)">Lucro: ${i.moeda} ${i.lucro}</strong><br>
-                        <small>${i.margem}</small>
-                    </div>
-                    <button class="btn-delete" onclick="excluirItem(${i.id})">X</button>
-                </div>
-            </div>
-        `).join('');
+                <div><strong>${i.nome}</strong><br><small>${i.data}</small></div>
+                <div style="color:var(--green); font-weight:bold;">${i.moeda} ${i.lucro}</div>
+            </div>`).join('');
     }
 
+    function novoProjeto() { if(confirm("Limpar tudo?")) location.reload(); }
+    
     function exportarCSV() {
-        const lista = JSON.parse(localStorage.getItem('precificecom_final_db') || '[]');
-        if(lista.length === 0) return alert("Histórico vazio!");
-        let csv = "data:text/csv;charset=utf-8,Produto;Preco Venda;Lucro;Margem;Data\n";
-        lista.forEach(i => csv += `${i.nome};${i.venda};${i.lucro};${i.margem};${i.data}\n`);
-        const encodedUri = encodeURI(csv);
+        const lista = JSON.parse(localStorage.getItem('precific_db') || '[]');
+        let csv = "Produto;Lucro;Data\n" + lista.map(i => `${i.nome};${i.lucro};${i.data}`).join("\n");
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
         const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "precific_ecom_export.csv");
-        document.body.appendChild(link);
+        link.href = URL.createObjectURL(blob);
+        link.download = "precificecom.csv";
         link.click();
     }
 
