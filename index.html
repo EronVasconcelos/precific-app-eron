@@ -63,23 +63,22 @@
         }
         .btn-new-top { background: var(--green); color: white; border: none; }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-sug { flex: 1; background: var(--input-bg); border: 1px solid var(--orange); color: var(--text-main); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
-
-        /* Resultado */
-        .result-main { background: var(--input-bg); border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; }
-        .editable-price-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 12px; margin: 15px auto; max-width: 280px; border: 1px solid var(--gray); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        /* Resultado - Correção de Sobreposição */
+        .result-main { background: var(--input-bg); border: 2px solid var(--orange); border-radius: 20px; padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .editable-price-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 12px; margin: 10px 0; width: 100%; max-width: 280px; border: 1px solid var(--gray); display: flex; align-items: center; justify-content: center; gap: 10px; }
         .currency-input-label { font-size: 1.5rem; font-weight: 700; color: var(--text-gray); opacity: 0.6; }
-        .editable-price-container input { background: transparent; border: none; text-align: left; font-size: 3rem; font-weight: 900; color: var(--text-main); width: 160px; }
+        .editable-price-container input { background: transparent; border: none; text-align: left; font-size: 3rem; font-weight: 900; color: var(--text-main); padding: 0; width: 160px; }
 
-        .price-display-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
-        .currency-symbol { font-size: 2.8rem; font-weight: 900; color: var(--green); }
-        .big-price { font-size: 3.8rem; font-weight: 900; color: var(--green); letter-spacing: -2px; }
+        .price-display-wrapper { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .currency-symbol { font-size: 2rem; font-weight: 900; color: var(--green); }
+        .big-price { font-size: 3.5rem; font-weight: 900; color: var(--green); letter-spacing: -2px; line-height: 1; }
+        .lucro-label-text { font-size: 0.8rem; color: var(--green); font-weight: 700; text-transform: uppercase; margin-top: 5px; }
+        
         .margem-badge { display: inline-block; margin-top: 15px; padding: 8px 22px; background: rgba(34, 197, 94, 0.1); border: 1px solid var(--green); border-radius: 30px; color: var(--green); font-weight: 700; font-size: 1rem; }
         
         .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray); }
 
-        /* PROJEÇÕES: 1 LINHA DESKTOP / 2 COLUNAS MOBILE */
+        /* Projeções */
         .proj-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 25px; }
         @media (max-width: 1000px) { .proj-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 600px) { .proj-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -91,10 +90,10 @@
         .btn-action { padding: 15px; border-radius: 8px; cursor: pointer; border: none; font-weight: 900; text-transform: uppercase; width: 100%; transition: 0.2s; }
         .btn-save { background: var(--green); color: white; margin-top: 15px; }
         
-        .empty-history { border: 2px dashed var(--gray); border-radius: 16px; padding: 40px; text-align: center; color: var(--text-gray); font-size: 1.1rem; margin-top: 15px; }
         .history-item { background: var(--card); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--gray); margin-bottom: 10px; }
         .btn-delete { background: var(--red); color: white; width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; }
 
+        /* Rodapé Restaurado */
         .footer-thanks { text-align: center; margin: 60px 0 20px; padding: 40px 20px; background: var(--card); border-radius: 20px; border: 1px solid var(--gray); }
         .pix-info { font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; font-weight: 600; line-height: 1.8; }
         .legal-footer { text-align: center; padding: 20px; color: var(--text-gray); font-size: 0.7rem; border-top: 1px solid var(--gray); letter-spacing: 0.5px; }
@@ -172,7 +171,7 @@
                     <span id="resSinal" class="currency-symbol">R$</span>
                     <div id="resLucro" class="big-price">0,00</div>
                 </div>
-                <span style="font-size: 0.8rem; color: var(--green); font-weight: 700; display: block; margin-top: -5px;">(LUCRO ESTIMADO)</span>
+                <span class="lucro-label-text">(LUCRO ESTIMADO)</span>
                 
                 <div id="resMargem" class="margem-badge">Margem Final: 0.0%</div>
             </div>
@@ -285,23 +284,23 @@
     function salvarHistorico() {
         const nome = document.getElementById('nomeProd').value || "Produto";
         const item = { id: Date.now(), nome, venda: document.getElementById('precoVenda').value, lucro: document.getElementById('resLucro').innerText, margem: document.getElementById('resMargem').innerText, moeda: document.getElementById('resSinal').innerText, data: new Date().toLocaleDateString() };
-        let lista = JSON.parse(localStorage.getItem('precific_db_vFinal') || '[]');
+        let lista = JSON.parse(localStorage.getItem('precific_final_v9') || '[]');
         lista.unshift(item);
-        localStorage.setItem('precific_db_vFinal', JSON.stringify(lista));
+        localStorage.setItem('precific_final_v9', JSON.stringify(lista));
         renderHistorico();
     }
 
     function excluirItem(id) {
-        let lista = JSON.parse(localStorage.getItem('precific_db_vFinal') || '[]');
-        localStorage.setItem('precific_db_vFinal', JSON.stringify(lista.filter(i => i.id !== id)));
+        let lista = JSON.parse(localStorage.getItem('precific_final_v9') || '[]');
+        localStorage.setItem('precific_final_v9', JSON.stringify(lista.filter(i => i.id !== id)));
         renderHistorico();
     }
 
     function renderHistorico() {
-        const lista = JSON.parse(localStorage.getItem('precific_db_vFinal') || '[]');
+        const lista = JSON.parse(localStorage.getItem('precific_final_v9') || '[]');
         const div = document.getElementById('historicoLista');
         if (lista.length === 0) {
-            div.innerHTML = '<div class="empty-history">Nenhum produto salvo no histórico.</div>';
+            div.innerHTML = '<div style="border: 2px dashed var(--gray); border-radius: 16px; padding: 40px; text-align: center; color: var(--text-gray); font-size: 1.1rem; margin-top: 15px;">Nenhum produto salvo no histórico.</div>';
             return;
         }
         div.innerHTML = lista.map(i => `
@@ -319,7 +318,7 @@
     }
 
     function exportarCSV() {
-        const lista = JSON.parse(localStorage.getItem('precific_db_vFinal') || '[]');
+        const lista = JSON.parse(localStorage.getItem('precific_final_v9') || '[]');
         if(lista.length === 0) return alert("Histórico vazio!");
         let csv = "Produto;Venda;Lucro;Margem;Data\n" + lista.map(i => `${i.nome};${i.venda};${i.lucro};${i.margem};${i.data}`).join("\n");
         const link = document.createElement("a");
